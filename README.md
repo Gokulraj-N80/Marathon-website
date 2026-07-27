@@ -14,44 +14,6 @@ It handles everything from user registration via a sleek frontend to admin opera
 
 ---
 
-## 📐 System Architecture & Flow
-
-The following diagram illustrates how participants, the backend API, the database, and the admin panel interact:
-
-```mermaid
-sequenceDiagram
-    autonumber
-    actor Runner as "Participant"
-    actor Admin
-    participant Frontend as React Frontend
-    participant Backend as Express API Server
-    participant DB as MongoDB Atlas
-    participant Email as SMTP Email Server
-
-    Runner->>Frontend: Fills Registration Form
-    Frontend->>Backend: POST /api/register
-    Backend->>DB: Saves Participant (Status: Pending)
-    Backend->>Email: Dispatches Registration Confirmation Email
-    Note over Backend,Email: HTML email template sent to user
-    Backend-->>Runner: WhatsApp notification stub logged
-
-    Admin->>Frontend: Log In (JWT Token acquired)
-    Admin->>Frontend: Views Dashboard & updates status to "Paid"
-    Frontend->>Backend: PUT /api/admin/participants/:id/payment (Status: Paid)
-    Backend->>Backend: Generates Unique BIB Number
-    Note right of Backend: Format: CITY-RACE-XXXX (e.g. CHE-21K-0005)
-    Backend->>DB: Updates Payment & BIB Info
-    Backend->>Email: Dispatches Payment Successful Email
-    Note over Email: Contains download URL for certificate
-    
-    Runner->>Backend: GET /api/certificate/download/:id
-    Backend->>Backend: Generates PDFKit A4 Landscape Certificate
-    Note right of Backend: Includes dynamic QR code verifying the URL
-    Backend-->>Runner: Downloads Finisher Certificate PDF
-```
-
----
-
 ## ⚡ Key Features
 
 ### 🎨 Frontend (Public Website)
