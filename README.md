@@ -21,19 +21,19 @@ The following diagram illustrates how participants, the backend API, the databas
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Participant
+    actor Runner as "Participant"
     actor Admin
     participant Frontend as React Frontend
     participant Backend as Express API Server
     participant DB as MongoDB Atlas
     participant Email as SMTP Email Server
 
-    Participant->>Frontend: Fills Registration Form
+    Runner->>Frontend: Fills Registration Form
     Frontend->>Backend: POST /api/register
     Backend->>DB: Saves Participant (Status: Pending)
     Backend->>Email: Dispatches Registration Confirmation Email
     Note over Backend,Email: HTML email template sent to user
-    Backend-->>Participant: WhatsApp notification stub logged
+    Backend-->>Runner: WhatsApp notification stub logged
 
     Admin->>Frontend: Log In (JWT Token acquired)
     Admin->>Frontend: Views Dashboard & updates status to "Paid"
@@ -44,10 +44,10 @@ sequenceDiagram
     Backend->>Email: Dispatches Payment Successful Email
     Note over Email: Contains download URL for certificate
     
-    Participant->>Backend: GET /api/certificate/download/:id
+    Runner->>Backend: GET /api/certificate/download/:id
     Backend->>Backend: Generates PDFKit A4 Landscape Certificate
     Note right of Backend: Includes dynamic QR code verifying the URL
-    Backend-->>Participant: Downloads Finisher Certificate PDF
+    Backend-->>Runner: Downloads Finisher Certificate PDF
 ```
 
 ---
