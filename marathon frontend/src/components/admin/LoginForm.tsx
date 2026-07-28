@@ -431,12 +431,12 @@ export function LoginForm({ onLogin }: LoginFormProps) {
                     whileTap={!isFormDisabled ? { scale: 0.98 } : undefined}
                     className={cn(
                       "relative w-full h-12 rounded-xl",
-                      "font-bold text-sm transition-all duration-300",
+                      "font-bold text-sm transition-all duration-200",
                       "flex items-center justify-center gap-2",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-slate-500",
                       isFormDisabled
-                        ? "cursor-not-allowed opacity-60"
-                        : "bg-gradient-to-r from-primary via-secondary to-accent hover:shadow-glow-primary text-white",
+                        ? "cursor-not-allowed opacity-60 bg-slate-200 dark:bg-white/10 text-slate-400 border border-slate-300 dark:border-white/10"
+                        : "bg-slate-900 dark:bg-white text-white dark:text-slate-900 border border-slate-900 dark:border-white hover:bg-slate-700 dark:hover:bg-slate-100 shadow-sm hover:shadow-md",
                     )}
                   >
                     {isLoading ? (
