@@ -430,11 +430,11 @@ let isWhatsAppReady = false;
 whatsappClient.on("qr", async (qr) => {
   console.log("\n------------------------------------------------------------");
   console.log("👉 SCAN THE QR CODE IN THE TERMINAL OR OPEN THE FILE:");
-  console.log("👉 e:\\Marathon-full\\backend\\whatsapp-qr.png");
+  console.log("👉 whatsapp-qr.png");
   console.log("------------------------------------------------------------\n");
 
   try {
-    const qrPath = "e:\\Marathon-full\\backend\\whatsapp-qr.png";
+    const qrPath = "whatsapp-qr.png";
     await QRCode.toFile(qrPath, qr, { width: 300 });
     console.log(`🖼️  QR Code image saved successfully to: ${qrPath}`);
   } catch (err) {
@@ -447,7 +447,7 @@ whatsappClient.on("ready", () => {
   console.log("✅ WhatsApp Web Client is fully connected and ready!");
   
   try {
-    const qrPath = "e:\\Marathon-full\\backend\\whatsapp-qr.png";
+    const qrPath = "whatsapp-qr.png";
     if (fs.existsSync(qrPath)) {
       fs.unlinkSync(qrPath);
       console.log("🧹 Cleaned up temporary whatsapp-qr.png file.");
@@ -464,12 +464,18 @@ whatsappClient.on("auth_failure", (msg) => {
 whatsappClient.on("disconnected", (reason) => {
   isWhatsAppReady = false;
   console.log("❌ WhatsApp Web was disconnected:", reason);
-  // Re-initialize to generate a new QR code
-  whatsappClient.initialize().catch(err => console.error("Re-initialization error:", err));
+  // Re-initialize to generate a new QR code if not disabled
+  if (process.env.DISABLE_WHATSAPP !== 'true') {
+    whatsappClient.initialize().catch(err => console.error("Re-initialization error:", err));
+  }
 });
 
-// Initialize client
-whatsappClient.initialize().catch(err => console.error("WhatsApp Initialization error:", err));
+// Initialize client if not disabled
+if (process.env.DISABLE_WHATSAPP === 'true') {
+  console.log("ℹ️ WhatsApp Client initialization is disabled (DISABLE_WHATSAPP=true). Running in mock mode.");
+} else {
+  whatsappClient.initialize().catch(err => console.error("WhatsApp Initialization error:", err));
+}
 
 async function sendWhatsApp(phone, message) {
   if (!isWhatsAppReady) {
