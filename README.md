@@ -1,7 +1,6 @@
 # 🏃 Run Beyond Limits 2026
 
-[![Live Site](https://img.shields.io/badge/Live%20Site-marathon--website--1.onrender.com-brightgreen?logo=render&logoColor=white)](https://marathon-website-1.onrender.com)
-[![Backend API](https://img.shields.io/badge/Backend%20API-marathon--website.onrender.com-blue?logo=render&logoColor=white)](https://marathon-website.onrender.com)
+[![View Site](https://img.shields.io/badge/View%20Site-marathon--website--1.onrender.com-brightgreen?logo=render&logoColor=white)](https://marathon-website-1.onrender.com)
 [![React](https://img.shields.io/badge/React-19.0-61DAFB?logo=react&logoColor=white)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Node.js](https://img.shields.io/badge/Node.js-v18+-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org)
@@ -13,11 +12,10 @@ A full-stack marathon event registration and management platform for **Run Beyon
 
 ## 🔗 Live Links
 
-| Service | URL |
+| | URL |
 |---|---|
-| 🌐 **Frontend (Live Site)** | [https://marathon-website-1.onrender.com](https://marathon-website-1.onrender.com) |
-| 🔧 **Backend API** | [https://marathon-website.onrender.com](https://marathon-website.onrender.com) |
-| 🔐 **Admin Dashboard** | [https://marathon-website-1.onrender.com/admin](https://marathon-website-1.onrender.com/admin) |
+| 🌐 **View Site** | [https://marathon-website-1.onrender.com](https://marathon-website-1.onrender.com) |
+| 🔐 **View Admin Dashboard** | [https://marathon-website-1.onrender.com/admin](https://marathon-website-1.onrender.com/admin) |
 
 > **Demo Credentials** — Username: `admin` / Password: `password123`
 
