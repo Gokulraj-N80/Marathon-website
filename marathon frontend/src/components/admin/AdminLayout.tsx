@@ -135,9 +135,9 @@ export function AdminLayout({ tab, setTab, onLogout, participantCount, children 
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("admin_dark_mode");
-      return saved ? saved === "true" : true;
+      return saved ? saved === "true" : false;
     }
-    return true;
+    return false;
   });
 
   const toggleDarkMode = () => {
