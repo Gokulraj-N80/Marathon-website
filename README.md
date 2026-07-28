@@ -1,82 +1,157 @@
-# Run Beyond Limits 2026 🏃
+# 🏃 Run Beyond Limits 2026
 
-[![React](https://img.shields.io/badge/React-19.0-blue?logo=react&logoColor=white)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4.0-38B2AC?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Live Site](https://img.shields.io/badge/Live%20Site-marathon--website--1.onrender.com-brightgreen?logo=render&logoColor=white)](https://marathon-website-1.onrender.com)
+[![Backend API](https://img.shields.io/badge/Backend%20API-marathon--website.onrender.com-blue?logo=render&logoColor=white)](https://marathon-website.onrender.com)
+[![React](https://img.shields.io/badge/React-19.0-61DAFB?logo=react&logoColor=white)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Node.js](https://img.shields.io/badge/Node.js-v18+-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org)
-[![Express](https://img.shields.io/badge/Express-4.19-lightgrey?logo=express&logoColor=white)](https://expressjs.com)
-[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green?logo=mongodb&logoColor=white)](https://www.mongodb.com/atlas)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?logo=mongodb&logoColor=white)](https://www.mongodb.com/atlas)
 
-A full-stack Node.js marathon event registration and management platform supporting multi-city events across **Chennai, Bengaluru, and Salem**.
+A full-stack marathon event registration and management platform for **Run Beyond Limits 2026** — a multi-city running event held simultaneously across **Chennai, Bengaluru, and Salem**.
+
+---
+
+## 🔗 Live Links
+
+| Service | URL |
+|---|---|
+| 🌐 **Frontend (Live Site)** | [https://marathon-website-1.onrender.com](https://marathon-website-1.onrender.com) |
+| 🔧 **Backend API** | [https://marathon-website.onrender.com](https://marathon-website.onrender.com) |
+| 🔐 **Admin Dashboard** | [https://marathon-website-1.onrender.com/admin](https://marathon-website-1.onrender.com/admin) |
+
+> **Demo Credentials** — Username: `admin` / Password: `password123`
 
 ---
 
 ## ✨ Key Features
-- **Runner Portal**: Responsive step-by-step registration with Zod schema validation.
-- **Admin Dashboard**: Real-time stats, interactive participant records, and report exports.
-- **BIB Allocation**: Automatic generation and assignment of BIBs upon payment approval.
-- **PDF & Email Automations**: Sends styled confirmation emails with dynamically generated PDF certificates and validation QR codes.
-- **Responsive Navigation**: Polished navigation layout with dynamic font sizes, seamless route tracking indicators, and quick-access Admin integration.
-- **Glassmorphic Admin Access**: Secure admin sign-in featuring a centered, glassmorphic layout optimized for both desktop and mobile viewports with fluid animations.
+
+### 🏃 Runner Portal
+- Multi-step registration form with real-time Zod schema validation
+- Race category selection (5K / 10K / Half Marathon) with T-shirt size picker
+- Confirmation email with PDF certificate sent automatically on payment approval
+- Certificate download page — lookup by email or phone number
+
+### 🔐 Admin Dashboard
+- **Dashboard Overview** — Live stats: total registrations, revenue, payment breakdown, category distribution
+- **Participants Table** — Search, filter, sort, and paginate all registered runners
+- **Payment Management** — Approve/reject payments; auto-generates BIB numbers on approval
+- **T-Shirt Management** — Track T-shirt size allocations per runner
+- **Reports & Exports** — Download participant data as CSV/Excel reports
+- **Contacts** — View and manage contact form submissions
+- **Light / Dark Theme** — Toggle between themes; preference saved in localStorage
+- Secure JWT-based authentication with session persistence
+
+### 📧 Automation
+- Styled HTML confirmation emails via Nodemailer (Gmail SMTP)
+- Dynamically generated PDF certificates with QR code validation
+- Automatic BIB number assignment upon payment approval
+
+### 🗺️ Multi-City Support
+- **Chennai** — Marina Beach coastal route
+- **Bengaluru** — Vidhana Soudha heritage route
+- **Salem** — Yercaud scenic hills route
 
 ---
 
-## 🛠️ Quick Start
+## 🛠️ Tech Stack
 
-### 1. Configure Backend Environment
-Create a `.env` file in the `backend/` folder:
-```env
-PORT=5000
-MONGODB_URI=your_mongodb_atlas_connection_string
-JWT_SECRET=your_jwt_secret
-BASE_URL=http://localhost:5000
+| Layer | Technology |
+|---|---|
+| **Frontend** | TanStack Start (SSR), React 19, TypeScript, Tailwind CSS v4 |
+| **Backend** | Node.js, Express.js, MongoDB Atlas, Mongoose |
+| **Auth** | JWT (JSON Web Tokens) + bcryptjs |
+| **Email** | Nodemailer (Gmail SMTP) |
+| **PDF** | PDFKit |
+| **Deployment** | Render.com (Web Services) |
 
-# Seeder Admin
-ADMIN_USERNAME=admin
-ADMIN_PASSWORD=adminpassword123
+---
 
-# SMTP Outbox Config
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=465
-SMTP_USER=your_email@gmail.com
-SMTP_PASS=your_gmail_app_password
-SMTP_FROM=your_email@gmail.com
-```
+## 🏁 Race Categories
 
-### 2. Run Backend API
-```bash
-cd backend
-npm install
-npm run seed  # Create admin account
-npm run dev   # Runs on http://localhost:5000
-```
-
-### 3. Run Frontend App
-```bash
-cd "marathon frontend"
-npm install   # or bun install
-npm run dev   # Runs on http://localhost:8080
-```
+| Category | Distance | Entry Fee |
+|---|---|---|
+| Fun Run | 5K | ₹499 |
+| Challenge | 10K | ₹799 |
+| Half Marathon | 21K | ₹999 |
 
 ---
 
 ## 📡 Core API Routes
 
-| Method | Route | Description | Authentication |
+| Method | Endpoint | Description | Auth |
 |---|---|---|---|
-| **POST** | `/api/register` | Register a new participant | Public |
-| **POST** | `/api/admin/login` | Admin Authentication | Public |
-| **GET** | `/api/certificate/download/:id` | Generate and download certificate | Public |
-| **PUT** | `/api/admin/participants/:id/payment` | Approve payment and generate BIB | Admin (JWT) |
+| `POST` | `/api/register` | Register new participant | Public |
+| `POST` | `/api/admin/login` | Admin login → returns JWT | Public |
+| `GET` | `/api/admin/participants` | List all participants | Admin JWT |
+| `GET` | `/api/admin/stats` | Dashboard statistics | Admin JWT |
+| `PUT` | `/api/admin/participants/:id/payment` | Approve/reject payment, assign BIB | Admin JWT |
+| `GET` | `/api/certificate/lookup` | Find participant by email or phone | Public |
+| `GET` | `/api/certificate/download/:id` | Generate & download PDF certificate | Public |
 
 ---
 
-## 🏃 Race Categories
-- **5K Fun Run** — ₹499
-- **10K Challenge** — ₹799
-- **Half Marathon (21K)** — ₹999
+## 🚀 Local Development
+
+### 1. Backend Setup
+
+Create `backend/.env`:
+```env
+PORT=5000
+MONGODB_URI=your_mongodb_atlas_connection_string
+JWT_SECRET=your_jwt_secret
+BASE_URL=http://localhost:5000
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=password123
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_USER=your_email@gmail.com
+SMTP_PASS=your_gmail_app_password
+SMTP_FROM=your_email@gmail.com
+DISABLE_WHATSAPP=true
+```
+
+```bash
+cd backend
+npm install
+npm run seed     # Seeds admin + 100 test participants
+npm run dev      # Starts API at http://localhost:5000
+```
+
+### 2. Frontend Setup
+
+Create `marathon frontend/.env`:
+```env
+VITE_API_URL=http://localhost:5000
+```
+
+```bash
+cd "marathon frontend"
+bun install      # or npm install
+npm run dev      # Starts site at http://localhost:8080
+```
+
+---
+
+## 🌐 Deployment (Render.com)
+
+### Backend Web Service
+| Setting | Value |
+|---|---|
+| Root Directory | `backend` |
+| Build Command | `npm install` |
+| Start Command | `npm start` |
+| Env: `DISABLE_WHATSAPP` | `true` |
+
+### Frontend Web Service
+| Setting | Value |
+|---|---|
+| Root Directory | `marathon frontend` |
+| Build Command | `bun install && NITRO_PRESET=node-server npm run build` |
+| Start Command | `node .output/server/index.mjs` |
+| Env: `VITE_API_URL` | Your backend Render URL |
 
 ---
 
 ## 👨‍💻 Author
-- **Gokulraj N** — [@Gokulraj-N80](https://github.com/Gokulraj-N80)
+
+**Gokulraj N** — [@Gokulraj-N80](https://github.com/Gokulraj-N80)
