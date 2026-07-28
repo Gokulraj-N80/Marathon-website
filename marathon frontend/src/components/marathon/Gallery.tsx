@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { X, ChevronLeft, ChevronRight, Camera } from "lucide-react";
-import runningClubChennai from "@/assets/New assests/running-club-chennai.webp";
-import bengaluru from "@/assets/New assests/bengaluru.webp";
-import salem from "@/assets/New assests/salem.webp";
-import medalCeremony from "@/assets/New assests/medal-ceremony.webp";
-import familyFinish from "@/assets/New assests/family-finish.webp";
-import finishLine from "@/assets/New assests/finish-line.webp";
-import warmUp from "@/assets/New assests/warm-up.webp";
-import hydration from "@/assets/New assests/hydration.webp";
-import medal from "@/assets/New assests/medal.webp";
+import runningClubChennai from "@/New assests/running-club-chennai.webp";
+import bengaluru from "@/New assests/bengaluru.webp";
+import salem from "@/New assests/salem.webp";
+import medalCeremony from "@/New assests/medal-ceremony.webp";
+import familyFinish from "@/New assests/family-finish.webp";
+import finishLine from "@/New assests/finish-line.webp";
+import warmUp from "@/New assests/warm-up.webp";
+import hydration from "@/New assests/hydration.webp";
+import medal from "@/New assests/medal.webp";
 
 const IMAGES = [
   { src: runningClubChennai, alt: "Running club at Chennai Marina Beach" },
