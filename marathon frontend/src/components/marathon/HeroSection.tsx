@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Calendar, ChevronDown } from "lucide-react";
-import bgImg from "@/assets/hero-runners.jpg";
+import bgImg from "@/assets/background.png";
 import logo from "@/assets/img.png";
 import { EVENT } from "@/data/marathon";
 

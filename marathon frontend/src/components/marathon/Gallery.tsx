@@ -1,24 +1,25 @@
 import { useEffect, useState } from "react";
 import { X, ChevronLeft, ChevronRight, Camera } from "lucide-react";
-import g1 from "@/assets/g1.jpg";
-import g2 from "@/assets/g2.jpg";
-import g3 from "@/assets/g3.jpg";
-import g4 from "@/assets/g4.jpg";
-import g5 from "@/assets/g5.jpg";
-import g6 from "@/assets/g6.jpg";
-import finishLine from "@/assets/about-runners.jpg";
-import crowdRun from "@/assets/hero-bg.jpg";
+import runningClubChennai from "@/assets/New assests/running-club-chennai.webp";
+import bengaluru from "@/assets/New assests/bengaluru.webp";
+import salem from "@/assets/New assests/salem.webp";
+import medalCeremony from "@/assets/New assests/medal-ceremony.webp";
+import familyFinish from "@/assets/New assests/family-finish.webp";
+import finishLine from "@/assets/New assests/finish-line.webp";
+import warmUp from "@/assets/New assests/warm-up.webp";
+import hydration from "@/assets/New assests/hydration.webp";
+import medal from "@/assets/New assests/medal.webp";
 
 const IMAGES = [
-  { src: g1, alt: "Runners at the start line" },
-  { src: g2, alt: "Finisher medal moment" },
-  { src: g3, alt: "Runners forming a heart" },
-  { src: g4, alt: "Volunteers cheering runners" },
-  { src: g5, alt: "Winners on the podium" },
-  { src: g6, alt: "Community runners together" },
-  { src: finishLine, alt: "Runners celebrating at the finish line" },
-  { src: crowdRun, alt: "Massive crowd of runners on race day" },
-  { src: g2, alt: "Proud finisher" },
+  { src: runningClubChennai, alt: "Running club at Chennai Marina Beach" },
+  { src: bengaluru, alt: "Runners at Bengaluru Vidhana Soudha" },
+  { src: salem, alt: "Runners on Salem Yercaud hills at sunrise" },
+  { src: medalCeremony, alt: "Medal ceremony — Indian runner" },
+  { src: familyFinish, alt: "Family celebrating at the finish line" },
+  { src: finishLine, alt: "Runners crossing the finish line" },
+  { src: warmUp, alt: "Runners warming up before the race" },
+  { src: hydration, alt: "Hydration station on the course" },
+  { src: medal, alt: "Proud finisher holding his medal" },
 ];
 
 export default function Gallery({ compact = false }: { compact?: boolean }) {

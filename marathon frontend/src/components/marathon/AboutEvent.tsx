@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Heart, Users, MapPin } from "lucide-react";
-import img from "@/assets/home.png";
+import img from "@/assets/New assests/about.webp";
 
 export default function AboutEvent() {
   return (
