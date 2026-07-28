@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Heart, Users, MapPin } from "lucide-react";
-import img from "@/assets/about-runners.jpg";
+import img from "@/assets/home.png";
 
 export default function AboutEvent() {
   return (

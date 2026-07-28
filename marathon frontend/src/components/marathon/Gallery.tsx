@@ -6,6 +6,8 @@ import g3 from "@/assets/g3.jpg";
 import g4 from "@/assets/g4.jpg";
 import g5 from "@/assets/g5.jpg";
 import g6 from "@/assets/g6.jpg";
+import finishLine from "@/assets/about-runners.jpg";
+import crowdRun from "@/assets/hero-bg.jpg";
 
 const IMAGES = [
   { src: g1, alt: "Runners at the start line" },
@@ -14,8 +16,8 @@ const IMAGES = [
   { src: g4, alt: "Volunteers cheering runners" },
   { src: g5, alt: "Winners on the podium" },
   { src: g6, alt: "Community runners together" },
-  { src: g1, alt: "Start line crowd" },
-  { src: g4, alt: "High fives at the aid station" },
+  { src: finishLine, alt: "Runners celebrating at the finish line" },
+  { src: crowdRun, alt: "Massive crowd of runners on race day" },
   { src: g2, alt: "Proud finisher" },
 ];
 
