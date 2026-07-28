@@ -318,41 +318,6 @@ export function DashboardTab({ stats, categoryData, dailyData, cityData, partici
         </Card>
       </div>
 
-      {/* Premium Insights Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <InsightCard
-          title="Avg. Registration Time"
-          value="2m 34s"
-          description="Down from 3m 12s last week"
-          icon={<Activity className="h-5 w-5" />}
-          trend={{ value: 18, label: "improvement", isPositive: true }}
-          variant="highlight"
-        />
-        <InsightCard
-          title="Mobile vs Desktop"
-          value="68% Mobile"
-          description="Mobile conversions up 23%"
-          icon={<Target className="h-5 w-5" />}
-          trend={{ value: 23, label: "mobile growth", isPositive: true }}
-          variant="default"
-        />
-        <InsightCard
-          title="Avg. Order Value"
-          value={`₹${avgRevenuePerPaid.toLocaleString()}`}
-          description="Premium packages driving growth"
-          icon={<DollarSign className="h-5 w-5" />}
-          trend={{ value: 15, label: "vs last month", isPositive: true }}
-          variant="bordered"
-        />
-        <InsightCard
-          title="Peak Registration Hour"
-          value="7-8 PM IST"
-          description="34% of daily signups"
-          icon={<Activity className="h-5 w-5" />}
-          trend={{ value: 0, label: "consistent", isPositive: true }}
-          variant="default"
-        />
-      </div>
     </div>
   );
 }

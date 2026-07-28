@@ -8,6 +8,7 @@ const NAV = [
   { label: "About", to: "/about" },
   { label: "Gallery", to: "/gallery" },
   { label: "Contact", to: "/contact" },
+  { label: "Admin", to: "/admin" },
 ];
 
 import logo from "@/assets/img.png";
@@ -67,8 +68,8 @@ export default function Navbar() {
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }
                 }}
-                className="relative px-4 py-2 text-sm font-medium tracking-wide text-slate-500 hover:text-royal rounded-full hover:bg-royal/5 transition-all duration-200 after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-royal after:rounded-full after:transition-all after:duration-300 hover:after:w-6"
-                activeProps={{ className: "!text-royal !font-semibold !bg-royal/5 after:!w-6" }}
+                className="relative px-4 py-2 text-base font-semibold tracking-wide text-slate-500 hover:text-royal rounded-full hover:bg-royal/5 transition-all duration-200 after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-royal after:rounded-full after:transition-all after:duration-300 hover:after:w-6"
+                activeProps={{ className: "!text-royal !font-bold !bg-royal/5 after:!w-6" }}
               >
                 {n.label}
               </Link>

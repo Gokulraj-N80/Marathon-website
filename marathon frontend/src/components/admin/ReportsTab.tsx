@@ -201,52 +201,6 @@ export function ReportsTab({ reportData, revenueByCity, revenueByRace, participa
         </Card>
       </div>
 
-      {/* Revenue Trend Projection */}
-      <Card className="bg-card border border-slate-200 dark:border-white/10 rounded-3xl p-6 overflow-hidden relative shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover-premium">
-        <CardHeader className="pb-3 flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-sm font-bold text-foreground">
-            <span className="h-2 w-2 rounded-full bg-accent" />
-            Revenue Trend Projection
-          </CardTitle>
-          <PremiumBadge variant="accent" size="sm">Forecast</PremiumBadge>
-        </CardHeader>
-        <CardContent className="pt-2">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <InsightCard
-              title="Current Revenue"
-              value={`₹${(totalRevenue / 100000).toFixed(1)}L`}
-              description="Year to date"
-              icon={<TrendingUp className="h-5 w-5" />}
-              trend={{ value: 31, label: "vs last year", isPositive: true }}
-              variant="highlight"
-            />
-            <InsightCard
-              title="Projected (Q4)"
-              value={`₹${(projectedRevenue / 100000).toFixed(1)}L`}
-              description="Based on current trajectory"
-              icon={<TrendingUp className="h-5 w-5" />}
-              trend={{ value: 25, label: "growth expected", isPositive: true }}
-              variant="default"
-            />
-            <InsightCard
-              title="Avg. Order Value"
-              value={`₹${Math.round(totalRevenue / totalPaid).toLocaleString()}`}
-              description="Per paid registration"
-              icon={<TrendingUp className="h-5 w-5" />}
-              trend={{ value: 12, label: "increase", isPositive: true }}
-              variant="bordered"
-            />
-            <InsightCard
-              title="Outstanding"
-              value={`₹${(totalPending * 799 / 100000).toFixed(1)}L`}
-              description="Pending payments est."
-              icon={<TrendingUp className="h-5 w-5" />}
-              trend={{ value: totalPending, label: "pending", isPositive: false }}
-              variant="default"
-            />
-          </div>
-        </CardContent>
-      </Card>
 
       {/* Premium Payment Summary Table */}
       <Card className="bg-card border border-slate-200 dark:border-white/10 rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)]">

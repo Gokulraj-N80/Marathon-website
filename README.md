@@ -16,6 +16,8 @@ A full-stack Node.js marathon event registration and management platform support
 - **Admin Dashboard**: Real-time stats, interactive participant records, and report exports.
 - **BIB Allocation**: Automatic generation and assignment of BIBs upon payment approval.
 - **PDF & Email Automations**: Sends styled confirmation emails with dynamically generated PDF certificates and validation QR codes.
+- **Responsive Navigation**: Polished navigation layout with dynamic font sizes, seamless route tracking indicators, and quick-access Admin integration.
+- **Glassmorphic Admin Access**: Secure admin sign-in featuring a centered, glassmorphic layout optimized for both desktop and mobile viewports with fluid animations.
 
 ---
 
