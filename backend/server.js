@@ -481,8 +481,8 @@ whatsappClient.on("disconnected", (reason) => {
 });
 
 // Initialize client if not disabled
-if (process.env.DISABLE_WHATSAPP === 'true') {
-  console.log("ℹ️ WhatsApp Client initialization is disabled (DISABLE_WHATSAPP=true). Running in mock mode.");
+if (true || process.env.DISABLE_WHATSAPP === 'true') {
+  console.log("ℹ️ WhatsApp Client initialization is disabled. Running in mock mode.");
 } else {
   whatsappClient.initialize().catch(err => console.error("WhatsApp Initialization error:", err));
 }
@@ -490,37 +490,6 @@ if (process.env.DISABLE_WHATSAPP === 'true') {
 async function sendWhatsApp(phone, message) {
   // Disabled per user request
   return;
-  if (!isWhatsAppReady) {
-
-  try {
-    let formattedPhone = phone.trim().replace(/\D/g, "");
-    
-    // Strip leading country code 91 if present
-    if (formattedPhone.startsWith("91") && formattedPhone.length > 10) {
-      formattedPhone = formattedPhone.substring(2);
-    }
-    
-    // Strip leading zero if present
-    if (formattedPhone.startsWith("0")) {
-      formattedPhone = formattedPhone.substring(1);
-    }
-    
-    // Re-prepend country code 91
-    formattedPhone = `91${formattedPhone}`;
-    
-    const chatId = `${formattedPhone}@c.us`;
-
-    // Log check if number is registered on WhatsApp, but still attempt to send
-    const isRegistered = await whatsappClient.isRegisteredUser(chatId);
-    if (!isRegistered) {
-      console.warn(`⚠️ [WhatsApp API] Warning: +91${formattedPhone.substring(2)} might not be registered on WhatsApp. Attempting send anyway...`);
-    }
-
-    await whatsappClient.sendMessage(chatId, message);
-    console.log(`✅ [WhatsApp API] Successfully sent to +91${formattedPhone.substring(2)}`);
-  } catch (error) {
-    console.error(`❌ [WhatsApp API] Error sending to +91${phone}:`, error.message);
-  }
 }
 
 function getVenue(cityId) {
