@@ -6,7 +6,7 @@ dotenv.config();
 
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/marathon";
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "adminpassword123";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "password123";
 
 const AdminSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },

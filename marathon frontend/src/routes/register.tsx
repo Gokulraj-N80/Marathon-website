@@ -134,7 +134,7 @@ function RegisterPage() {
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
 
         {/* Stepper */}
-        <div className="mb-8 grid grid-cols-5 gap-2">
+        <div className="mb-8 grid grid-cols-3 md:grid-cols-6 gap-2">
           {STEPS.map((label, i) => (
             <div key={label} className="text-center">
               <div className={`mx-auto h-9 w-9 rounded-full grid place-items-center text-xs font-bold ${

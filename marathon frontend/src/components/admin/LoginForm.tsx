@@ -392,7 +392,7 @@ export function LoginForm({ onLogin }: LoginFormProps) {
                   </div>
                 </motion.div>
 
-                {/* Remember me + Forgot password */}
+                {/* Remember me */}
                 <motion.div
                   variants={itemVariants}
                   className="flex items-center justify-between"
@@ -411,15 +411,6 @@ export function LoginForm({ onLogin }: LoginFormProps) {
                       Remember me
                     </Label>
                   </div>
-                  <button
-                    type="button"
-                    className={cn(
-                      "text-sm font-semibold text-primary hover:text-primary/80",
-                      "transition-colors",
-                    )}
-                  >
-                    Forgot password?
-                  </button>
                 </motion.div>
 
                 {/* Submit button */}

@@ -55,9 +55,9 @@ export type Race = {
 };
 
 export const RACES: Race[] = [
-  { id: "half", distance: "21.1", type: "Half Marathon", subtype: "Timed Run", minAge: "18 Years", fee: "699", accent: "magenta" },
-  { id: "10k", distance: "10", type: "10 KM Run", subtype: "Timed Run", minAge: "16 Years", fee: "499", popular: true, accent: "gold" },
-  { id: "5k", distance: "5", type: "Fun Run", subtype: "Non Timed Run", minAge: "12 Years", fee: "349", accent: "cream" },
+  { id: "21k", distance: "21.1", type: "Half Marathon", subtype: "Timed Run", minAge: "18 Years", fee: "999", accent: "magenta" },
+  { id: "10k", distance: "10", type: "10 KM Run", subtype: "Timed Run", minAge: "16 Years", fee: "799", popular: true, accent: "gold" },
+  { id: "5k", distance: "5", type: "Fun Run", subtype: "Non Timed Run", minAge: "12 Years", fee: "499", accent: "cream" },
 ];
 
 export const FAQS = [

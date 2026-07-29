@@ -87,10 +87,9 @@ export function DashboardTab({ stats, categoryData, dailyData, cityData, partici
 
   // Payment funnel data
   const funnelData = [
-    { stage: "Visited", count: stats.total + 245, color: COLORS.primary },
-    { stage: "Started", count: stats.total + 180, color: COLORS.secondary },
-    { stage: "Completed", count: stats.total, color: COLORS.success },
-    { stage: "Paid", count: stats.paid, color: COLORS.accent },
+    { stage: "Registered", count: stats.total, color: COLORS.primary },
+    { stage: "Pending Payment", count: stats.pending, color: COLORS.warning },
+    { stage: "Paid", count: stats.paid, color: COLORS.success },
   ];
 
   const thisWeekTotal = weeklyComparison.reduce((sum, d) => sum + d.thisWeek, 0);
@@ -107,7 +106,6 @@ export function DashboardTab({ stats, categoryData, dailyData, cityData, partici
           icon={Users}
           color="primary"
           subtitle={`${participants.length} total in system`}
-          trend={{ value: 23, label: "vs last week", isPositive: true }}
           delay={0}
         />
         <StatCard
@@ -116,7 +114,6 @@ export function DashboardTab({ stats, categoryData, dailyData, cityData, partici
           icon={CheckCircle}
           color="success"
           subtitle={`${conversionRate}% conversion rate`}
-          trend={{ value: 12, label: "vs last week", isPositive: true }}
           delay={1}
         />
         <StatCard
@@ -125,7 +122,6 @@ export function DashboardTab({ stats, categoryData, dailyData, cityData, partici
           icon={Clock}
           color="warning"
           subtitle={`~₹${pendingValue.toLocaleString()} outstanding`}
-          trend={{ value: 8, label: "vs last week", isPositive: false }}
           delay={2}
         />
         <StatCard
@@ -134,7 +130,6 @@ export function DashboardTab({ stats, categoryData, dailyData, cityData, partici
           icon={IndianRupee}
           color="accent"
           subtitle={`Avg ₹${avgRevenuePerPaid.toLocaleString("en-IN")} per paid`}
-          trend={{ value: 31, label: "vs last week", isPositive: true }}
           delay={3}
         />
       </div>
@@ -153,7 +148,7 @@ export function DashboardTab({ stats, categoryData, dailyData, cityData, partici
           <CardContent className="pt-2">
             <div className="flex items-center justify-center h-64">
               <PremiumDonutChart
-                data={cityChartData}
+                data={categoryChartData}
                 height={256}
                 innerRadius={60}
                 outerRadius={88}

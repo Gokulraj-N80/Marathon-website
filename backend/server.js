@@ -12,6 +12,9 @@ import pkg from "whatsapp-web.js";
 const { Client, LocalAuth } = pkg;
 import qrcodeTerminal from "qrcode-terminal";
 import fs from "fs";
+import { z } from "zod";
+import rateLimit from "express-rate-limit";
+import mongoSanitize from "express-mongo-sanitize";
 
 dotenv.config();
 
@@ -21,8 +24,14 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/marathon";
-const JWT_SECRET = process.env.JWT_SECRET || "supersecretmarathonkey123";
 
+if (!process.env.JWT_SECRET) {
+  console.error("FATAL ERROR: JWT_SECRET is not defined in the environment.");
+  process.exit(1);
+}
+const JWT_SECRET = process.env.JWT_SECRET;
+
+app.use(mongoSanitize());
 // Nodemailer SMTP Transporter (works with Gmail port 465 AND Brevo port 587)
 const smtpPort = parseInt(process.env.SMTP_PORT) || 587;
 const transporter = nodemailer.createTransport({
@@ -38,7 +47,8 @@ const transporter = nodemailer.createTransport({
 // Verify SMTP connection on start
 transporter.verify((err, success) => {
   if (err) {
-    console.error("SMTP Connection Error:", err.message);
+    console.error("FATAL ERROR: SMTP Connection failed:", err.message);
+    process.exit(1);
   } else {
     console.log("SMTP Server is ready to send emails!");
   }
@@ -201,7 +211,7 @@ async function sendPaymentConfirmationEmail(participant) {
   const BASE_URL = process.env.BASE_URL || "http://localhost:5000";
   const certLink = `${BASE_URL}/api/certificate/download/${participant._id}`;
 
-  const raceDate = "August 24, 2026";
+  const raceDate = "September 27, 2026";
 
   const plainText = `Dear ${participant.fullName},
 
@@ -478,10 +488,9 @@ if (process.env.DISABLE_WHATSAPP === 'true') {
 }
 
 async function sendWhatsApp(phone, message) {
+  // Disabled per user request
+  return;
   if (!isWhatsAppReady) {
-    console.log(`\n📱 [WhatsApp Mock - Client Not Connected] Sent to +91${phone}:\n${message}\n`);
-    return;
-  }
 
   try {
     let formattedPhone = phone.trim().replace(/\D/g, "");
@@ -526,7 +535,7 @@ function getVenue(cityId) {
 // Send WhatsApp Notification (console log — integrated via sendWhatsApp channel helper)
 function sendWhatsAppNotification(participant) {
   const raceLabel = participant.raceId === "5k" ? "5K Fun Run" : participant.raceId === "10k" ? "10K Challenge" : "Half Marathon (21K)";
-  const message = `Hello ${participant.fullName}! 🎉\n\nYou have successfully registered for *Run Beyond Limits 2026*!\n\n📍 City: ${participant.cityId.charAt(0).toUpperCase() + participant.cityId.slice(1)}\n🏃 Category: ${raceLabel}\n👕 T-Shirt: ${participant.size}\n\nPayment instructions will be sent soon. Once paid, your BIB number and certificate will be issued.\n\nSee you on race day! 💪`;
+  const message = `Hello ${participant.fullName}! 🎉\n\nYou have successfully registered for Run Beyond Limits 2026!\n\n📍 City: ${participant.cityId.charAt(0).toUpperCase() + participant.cityId.slice(1)}\n🏃 Category: ${raceLabel}\n👕 T-Shirt: ${participant.size}\n\nPayment instructions will be sent soon. Once paid, your BIB number and certificate will be issued.\n\nSee you on race day! 💪`;
   sendWhatsApp(participant.phone, message);
 }
 
@@ -600,7 +609,7 @@ function generateCertificatePDF(participant) {
         .text(participant.fullName.toUpperCase(), 0, 230, { align: "center" });
 
       // Race completion details
-      const raceDetailsText = `For successfully completing the ${participant.raceId.toUpperCase()} category in the Run Beyond Limits 2026 Marathon held at ${participant.city}.`;
+      const raceDetailsText = `For successfully completing the ${participant.raceId.toUpperCase()} category in the Run Beyond Limits 2026 Marathon held at ${getVenue(participant.cityId)}.`;
       doc.fillColor("#334155")
         .font("Helvetica")
         .fontSize(16)
@@ -615,7 +624,7 @@ function generateCertificatePDF(participant) {
       doc.fillColor("#1E3A8A")
         .font("Helvetica-Bold")
         .fontSize(14)
-        .text("DATE: JULY 2026", width - 280, 380, { align: "right" });
+        .text("DATE: SEPTEMBER 27, 2026", width - 280, 380, { align: "right" });
 
       // Signatures
       doc.save();
@@ -659,7 +668,7 @@ function generateCertificatePDF(participant) {
 async function send7DayReminder(participant) {
   const raceLabel = participant.raceId === "5k" ? "5K Fun Run" : participant.raceId === "10k" ? "10K Challenge" : "Half Marathon (21K)";
   const venue = getVenue(participant.cityId);
-  const marathonDateStr = process.env.MARATHON_DATE || "2026-08-24T06:00:00+05:30";
+  const marathonDateStr = process.env.MARATHON_DATE || "2026-09-27T05:30:00+05:30";
   const marathonDate = new Date(marathonDateStr);
   const dateStr = marathonDate.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
 
@@ -976,7 +985,7 @@ async function sendCertificateNotification(participant) {
 // --- AUTOMATED SCHEDULER ---
 
 async function runNotificationScheduler() {
-  const marathonDateStr = process.env.MARATHON_DATE || "2026-08-24T06:00:00+05:30";
+  const marathonDateStr = process.env.MARATHON_DATE || "2026-09-27T05:30:00+05:30";
   const marathonDate = new Date(marathonDateStr);
   const now = new Date();
   const timeDiffMs = marathonDate.getTime() - now.getTime();
@@ -1079,8 +1088,8 @@ const ParticipantSchema = new mongoose.Schema({
   fullName: { type: String, required: true },
   dob: { type: String, required: true },
   gender: { type: String, required: true },
-  phone: { type: String, required: true },
-  email: { type: String, required: true },
+  phone: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
   emergencyContact: { type: String, required: true },
   address: { type: String, required: true },
   city: { type: String, required: true },
@@ -1138,10 +1147,33 @@ const authenticateAdmin = (req, res, next) => {
 
 // --- API ROUTES ---
 
+const registerLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // Limit each IP to 5 registrations per window
+  message: { error: "Too many registrations from this IP, please try again later." }
+});
+
+const registerSchema = z.object({
+  fullName: z.string().min(1, "Full Name is required"),
+  dob: z.string().min(1, "Date of Birth is required"),
+  gender: z.enum(["Male", "Female", "Other"]),
+  phone: z.string().min(10, "Valid phone number is required"),
+  email: z.string().email("Invalid email address"),
+  emergencyContact: z.string().min(10, "Valid emergency contact is required"),
+  address: z.string().min(1, "Address is required"),
+  city: z.string().min(1, "City is required"),
+  state: z.string().min(1, "State is required"),
+  pincode: z.string().min(1, "Pincode is required"),
+  size: z.enum(["XS", "S", "M", "L", "XL", "XXL"]),
+  cityId: z.enum(["chennai", "bengaluru", "salem"]),
+  raceId: z.enum(["5k", "10k", "21k"]),
+});
+
 // Public: Participant Registration
-app.post("/api/register", async (req, res) => {
+app.post("/api/register", registerLimiter, async (req, res) => {
   try {
-    const newParticipant = new Participant(req.body);
+    const validatedData = registerSchema.parse(req.body);
+    const newParticipant = new Participant(validatedData);
     await newParticipant.save();
 
     // Send email, WhatsApp, and SMS notifications (non-blocking)
@@ -1158,7 +1190,14 @@ app.post("/api/register", async (req, res) => {
       participant: newParticipant
     });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ error: "Validation Error", details: error.errors });
+    }
+    if (error.code === 11000) {
+      return res.status(400).json({ error: "Email or Phone already registered." });
+    }
+    console.error("Registration error:", error);
+    res.status(500).json({ error: "Failed to create registration." });
   }
 });
 
@@ -1229,8 +1268,6 @@ app.put("/api/admin/participants/:id/payment", authenticateAdmin, async (req, re
       const racePrefix = participant.raceId.toUpperCase();
       const nextNum = String(count + 1).padStart(4, "0");
       participant.bibNumber = `${cityPrefix}-${racePrefix}-${nextNum}`;
-    } else if (paymentStatus === "Pending") {
-      participant.bibNumber = "";
     }
 
     await participant.save();
@@ -1244,7 +1281,7 @@ app.put("/api/admin/participants/:id/payment", authenticateAdmin, async (req, re
       const paySms = `Hi ${participant.fullName}, your payment for Run Beyond Limits 2026 is confirmed! BIB: ${participant.bibNumber}. Download certificate: ${downloadLink}`;
       sendSMS(participant.phone, paySms);
 
-      const payWa = `Hello ${participant.fullName}! 🎉 Your payment for Run Beyond Limits 2026 has been confirmed!\n\n🏅 BIB Number: *${participant.bibNumber}*\n🏆 Your Finisher Certificate is ready! Download it here: ${downloadLink}`;
+      const payWa = `Hello ${participant.fullName}! 🎉 Your payment for Run Beyond Limits 2026 has been confirmed!\n\n🏅 BIB Number: ${participant.bibNumber}\n🏆 Your Finisher Certificate is ready! Download it here: ${downloadLink}`;
       sendWhatsApp(participant.phone, payWa);
     }
 
@@ -1270,7 +1307,7 @@ app.put("/api/admin/participants/:id", authenticateAdmin, async (req, res) => {
     const participant = await Participant.findById(req.params.id);
     if (!participant) return res.status(404).json({ error: "Participant not found" });
 
-    const allowed = ["fullName", "phone", "email", "city", "cityId", "raceId", "size", "dob", "gender", "address", "state", "pincode", "emergencyContact"];
+    const allowed = ["fullName", "phone", "email", "city", "cityId", "raceId", "size", "dob", "gender", "address", "state", "pincode", "emergencyContact", "paymentTxnId", "bibNumber"];
     for (const key of allowed) {
       if (req.body[key] !== undefined) participant[key] = req.body[key];
     }
@@ -1339,7 +1376,7 @@ app.get("/api/certificate/lookup", async (req, res) => {
     const participant = await Participant.findOne({
       $and: [
         { paymentStatus: "Paid" },
-        { $or: [{ email: query.trim() }, { phone: query.trim() }] }
+        { $or: [{ email: new RegExp("^" + query.trim() + "$", "i") }, { phone: query.trim() }] }
       ]
     });
 

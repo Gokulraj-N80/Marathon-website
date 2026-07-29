@@ -65,7 +65,7 @@ async function seed() {
       cityId: city,
       raceId: race,
       paymentStatus: paid ? "Paid" : "Pending",
-      paymentTxnId: paid ? `TXN-${Date.now()}-${i}` : "",
+      paymentTxnId: paid ? `TXN-${Date.now() + i * 1000}-${i}` : "",
       bibNumber: paid ? `${cityPrefix}-${racePrefix}-${String(i + 1).padStart(4, "0")}` : "",
       registrationDate: registrationDate(i),
     };

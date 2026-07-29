@@ -48,4 +48,4 @@ export const RACE_PRICES: Record<string, number> = { "5k": 499, "10k": 799, "21k
 
 export const CHART_COLORS = ["#1E3A8A", "#F97316", "#059669", "#E11D48", "#8B5CF6", "#06B6D4"];
 
-export const API_BASE = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/admin`;
+export const API_BASE = `${(import.meta.env.VITE_API_URL || "http://localhost:5000").replace(/\/$/, "")}/api/admin`;

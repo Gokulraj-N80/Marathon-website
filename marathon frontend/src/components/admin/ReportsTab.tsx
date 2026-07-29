@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import { COLORS } from "./charts/PremiumCharts";
 import { PremiumBadge, InsightCard, PremiumAvatar, PremiumSkeleton, StatTrend, PremiumProgressRing, PremiumCard, SectionHeader, PageHeader } from "./PremiumUI";
 import { TrendBadge } from "./TrendComponents";
-import { TrendingUp } from "lucide-react";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";

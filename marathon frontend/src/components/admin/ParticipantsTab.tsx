@@ -56,8 +56,18 @@ export function ParticipantsTab({
   const [page, setPage] = useState(0);
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" } | null>(null);
 
-  const totalPages = Math.ceil(filteredParticipants.length / ROWS_PER_PAGE);
-  const paginatedParticipants = filteredParticipants.slice(
+  const sortedParticipants = [...filteredParticipants].sort((a, b) => {
+    if (!sortConfig) return 0;
+    const { key, direction } = sortConfig;
+    const aValue = (a as any)[key] || "";
+    const bValue = (b as any)[key] || "";
+    if (aValue < bValue) return direction === "asc" ? -1 : 1;
+    if (aValue > bValue) return direction === "asc" ? 1 : -1;
+    return 0;
+  });
+
+  const totalPages = Math.ceil(sortedParticipants.length / ROWS_PER_PAGE);
+  const paginatedParticipants = sortedParticipants.slice(
     page * ROWS_PER_PAGE,
     (page + 1) * ROWS_PER_PAGE
   );
