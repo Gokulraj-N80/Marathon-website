@@ -15,6 +15,7 @@ import fs from "fs";
 import { z } from "zod";
 import rateLimit from "express-rate-limit";
 import mongoSanitize from "express-mongo-sanitize";
+import { syncParticipantToSalesforce, deleteParticipantFromSalesforce } from "./salesforce.js";
 
 dotenv.config();
 
@@ -1070,6 +1071,7 @@ const ParticipantSchema = new mongoose.Schema({
   paymentStatus: { type: String, enum: ["Pending", "Paid"], default: "Pending" },
   paymentTxnId: { type: String, default: "" },
   bibNumber: { type: String, default: "" },
+  salesforceLeadId: { type: String, default: "" },
   registrationDate: { type: Date, default: Date.now },
   sentNotifications: {
     sevenDaysBefore: { type: Boolean, default: false },
@@ -1144,6 +1146,17 @@ app.post("/api/register", registerLimiter, async (req, res) => {
     const validatedData = registerSchema.parse(req.body);
     const newParticipant = new Participant(validatedData);
     await newParticipant.save();
+
+    // Sync to Salesforce Lead
+    try {
+      const leadId = await syncParticipantToSalesforce(newParticipant);
+      if (leadId) {
+        newParticipant.salesforceLeadId = leadId;
+        await newParticipant.save();
+      }
+    } catch (sfErr) {
+      console.error("Salesforce initial sync error:", sfErr.message);
+    }
 
     // Send email, WhatsApp, and SMS notifications (non-blocking)
     sendRegistrationEmail(newParticipant);
@@ -1241,6 +1254,17 @@ app.put("/api/admin/participants/:id/payment", authenticateAdmin, async (req, re
 
     await participant.save();
 
+    // Sync to Salesforce
+    try {
+      const leadId = await syncParticipantToSalesforce(participant);
+      if (leadId && !participant.salesforceLeadId) {
+        participant.salesforceLeadId = leadId;
+        await participant.save();
+      }
+    } catch (sfErr) {
+      console.error("Salesforce payment update sync error:", sfErr.message);
+    }
+
     // Send payment confirmation notifications (email, SMS, and WhatsApp)
     if (paymentStatus === "Paid") {
       sendPaymentConfirmationEmail(participant);
@@ -1281,6 +1305,18 @@ app.put("/api/admin/participants/:id", authenticateAdmin, async (req, res) => {
       if (req.body[key] !== undefined) participant[key] = req.body[key];
     }
     await participant.save();
+
+    // Sync updated details to Salesforce
+    try {
+      const leadId = await syncParticipantToSalesforce(participant);
+      if (leadId && !participant.salesforceLeadId) {
+        participant.salesforceLeadId = leadId;
+        await participant.save();
+      }
+    } catch (sfErr) {
+      console.error("Salesforce edit sync error:", sfErr.message);
+    }
+
     res.json({ success: true, participant });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -1290,8 +1326,18 @@ app.put("/api/admin/participants/:id", authenticateAdmin, async (req, res) => {
 // Admin: Delete Participant
 app.delete("/api/admin/participants/:id", authenticateAdmin, async (req, res) => {
   try {
-    const participant = await Participant.findByIdAndDelete(req.params.id);
+    const participant = await Participant.findById(req.params.id);
     if (!participant) return res.status(404).json({ error: "Participant not found" });
+
+    if (participant.salesforceLeadId) {
+      try {
+        await deleteParticipantFromSalesforce(participant.salesforceLeadId);
+      } catch (sfErr) {
+        console.error("Salesforce delete sync error:", sfErr.message);
+      }
+    }
+
+    await Participant.findByIdAndDelete(req.params.id);
     res.json({ success: true, message: "Participant deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
