@@ -17,6 +17,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EventInfoRouteImport } from './routes/event-info'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ThemePreviewRouteImport } from './routes/theme-preview'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -58,6 +59,11 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ThemePreviewRoute = ThemePreviewRouteImport.update({
+  id: '/theme-preview',
+  path: '/theme-preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/event-info': typeof EventInfoRoute
   '/gallery': typeof GalleryRoute
   '/register': typeof RegisterRoute
+  '/theme-preview': typeof ThemePreviewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/event-info': typeof EventInfoRoute
   '/gallery': typeof GalleryRoute
   '/register': typeof RegisterRoute
+  '/theme-preview': typeof ThemePreviewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/event-info': typeof EventInfoRoute
   '/gallery': typeof GalleryRoute
   '/register': typeof RegisterRoute
+  '/theme-preview': typeof ThemePreviewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
     | '/event-info'
     | '/gallery'
     | '/register'
+    | '/theme-preview'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/event-info'
     | '/gallery'
     | '/register'
+    | '/theme-preview'
   id:
     | '__root__'
     | '/'
@@ -121,6 +132,7 @@ export interface FileRouteTypes {
     | '/event-info'
     | '/gallery'
     | '/register'
+    | '/theme-preview'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -132,6 +144,7 @@ export interface RootRouteChildren {
   EventInfoRoute: typeof EventInfoRoute
   GalleryRoute: typeof GalleryRoute
   RegisterRoute: typeof RegisterRoute
+  ThemePreviewRoute: typeof ThemePreviewRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -192,6 +205,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/theme-preview': {
+      id: '/theme-preview'
+      path: '/theme-preview'
+      fullPath: '/theme-preview'
+      preLoaderRoute: typeof ThemePreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -204,6 +224,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventInfoRoute: EventInfoRoute,
   GalleryRoute: GalleryRoute,
   RegisterRoute: RegisterRoute,
+  ThemePreviewRoute: ThemePreviewRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
