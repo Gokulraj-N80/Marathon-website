@@ -27,43 +27,43 @@ const themes: Record<string, { name: string; description: string; colors: CSSPro
       "--gradient-orange": "linear-gradient(135deg, #F97316 0%, #EA580C 100%)",
     },
   },
-  heritage: {
-    name: "Heritage Classic (Boston inspired)",
-    description: "Deep Midnight Blue, Boston Blue, and Historic Gold/Yellow.",
+  stealthVolt: {
+    name: "Stealth & Volt (2-Color High Tech)",
+    description: "High-performance matte charcoal with high-visibility electric volt yellow/green accents.",
     colors: {
-      "--navy": "#0A1128",
-      "--royal": "#1C3FFD",
-      "--orange": "#FFC914",
-      "--emerald": "#00A86B",
-      "--gradient-hero": "linear-gradient(135deg, #0A1128 0%, #0D21A9 45%, #1C3FFD 100%)",
-      "--gradient-cta": "linear-gradient(135deg, #0D21A9 0%, #1C3FFD 60%, #4D6AFF 100%)",
-      "--gradient-orange": "linear-gradient(135deg, #FFC914 0%, #E0A800 100%)",
+      "--navy": "#121214",       /* Dark Charcoal */
+      "--royal": "#CCFF00",      /* Volt Green */
+      "--orange": "#CCFF00",     /* Volt Green */
+      "--emerald": "#CCFF00",    /* Volt Green */
+      "--gradient-hero": "linear-gradient(135deg, #121214 0%, #1E1E22 60%, #2E2E34 100%)",
+      "--gradient-cta": "linear-gradient(135deg, #CCFF00 0%, #B3E000 100%)",
+      "--gradient-orange": "linear-gradient(135deg, #CCFF00 0%, #B3E000 100%)",
     },
   },
-  urban: {
-    name: "Urban Energy (NYC inspired)",
-    description: "Matte Charcoal, NYC Orange/Rust, and Safety Yellow.",
+  pureCrimson: {
+    name: "Pure Crimson & Obsidian (2-Color Bold)",
+    description: "Deep obsidian dark background paired only with high-energy crimson red and white.",
     colors: {
-      "--navy": "#121214",
-      "--royal": "#E35E14",
-      "--orange": "#FACC15",
-      "--emerald": "#10B981",
-      "--gradient-hero": "linear-gradient(135deg, #121214 0%, #7C2D12 45%, #E35E14 100%)",
-      "--gradient-cta": "linear-gradient(135deg, #7C2D12 0%, #E35E14 60%, #F97316 100%)",
-      "--gradient-orange": "linear-gradient(135deg, #FACC15 0%, #E2B007 100%)",
+      "--navy": "#0A0D14",       /* Obsidian Dark */
+      "--royal": "#E11D48",      /* Crimson Red */
+      "--orange": "#E11D48",     /* Crimson Red */
+      "--emerald": "#10B981",    /* Kept emerald for success badges */
+      "--gradient-hero": "linear-gradient(135deg, #0A0D14 0%, #1A0B10 50%, #3F0712 100%)",
+      "--gradient-cta": "linear-gradient(135deg, #E11D48 0%, #BE123C 100%)",
+      "--gradient-orange": "linear-gradient(135deg, #E11D48 0%, #BE123C 100%)",
     },
   },
-  pulse: {
-    name: "Community Pulse (London/Chicago inspired)",
-    description: "Deep Plum-Navy, London Crimson, and Coral Pink.",
+  electricObsidian: {
+    name: "Electric Blue & Dark Slate (3-Color Modern)",
+    description: "Minimalist dark slate background with a single bright electric cyan highlight and clean white text.",
     colors: {
-      "--navy": "#13001C",
-      "--royal": "#E11D48",
-      "--orange": "#FB7185",
-      "--emerald": "#14B8A6",
-      "--gradient-hero": "linear-gradient(135deg, #13001C 0%, #881337 45%, #E11D48 100%)",
-      "--gradient-cta": "linear-gradient(135deg, #881337 0%, #E11D48 60%, #FB7185 100%)",
-      "--gradient-orange": "linear-gradient(135deg, #FB7185 0%, #F43F5E 100%)",
+      "--navy": "#0F172A",       /* Dark Slate */
+      "--royal": "#0EA5E9",      /* Electric Cyan */
+      "--orange": "#0EA5E9",     /* Electric Cyan */
+      "--emerald": "#0EA5E9",    /* Electric Cyan */
+      "--gradient-hero": "linear-gradient(135deg, #0F172A 0%, #0C4A6E 50%, #0284C7 100%)",
+      "--gradient-cta": "linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%)",
+      "--gradient-orange": "linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%)",
     },
   },
 };
