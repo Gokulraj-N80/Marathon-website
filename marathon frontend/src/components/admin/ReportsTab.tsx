@@ -209,7 +209,8 @@ export function ReportsTab({ reportData, revenueByCity, revenueByRace, participa
             Payment Summary by Race
           </CardTitle>
         </CardHeader>
-        <Table>
+        {/* Desktop View */}
+        <Table className="hidden md:table">
           <TableHeader>
             <TableRow className="hover:bg-transparent border-b-border/40">
               <TableHead className="font-bold text-xs uppercase tracking-wider">Race</TableHead>
@@ -248,6 +249,64 @@ export function ReportsTab({ reportData, revenueByCity, revenueByRace, participa
             </TableRow>
           </TableBody>
         </Table>
+
+        {/* Mobile Card List View */}
+        <div className="block md:hidden divide-y divide-border/20 dark:divide-white/5">
+          {reportData.map((r) => {
+            const convRate = r.registered > 0 ? Math.round((r.paid / r.registered) * 100) : 0;
+            return (
+              <div key={r.race} className="p-4 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-primary text-sm">{r.race}</span>
+                  <TrendBadge value={`${convRate}%`} direction={convRate >= 50 ? "up" : convRate >= 30 ? "neutral" : "down"} size="sm" />
+                </div>
+                <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                  <div className="bg-muted/30 dark:bg-white/5 p-2 rounded-lg">
+                    <span className="text-[10px] text-muted-foreground block">Registered</span>
+                    <span className="font-semibold text-foreground">{r.registered.toLocaleString()}</span>
+                  </div>
+                  <div className="bg-success-muted p-2 rounded-lg">
+                    <span className="text-[10px] text-success block">Paid</span>
+                    <span className="font-semibold text-success">{r.paid.toLocaleString()}</span>
+                  </div>
+                  <div className="bg-warning-muted p-2 rounded-lg">
+                    <span className="text-[10px] text-warning block">Pending</span>
+                    <span className="font-semibold text-warning">{r.pending.toLocaleString()}</span>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center text-xs pt-1">
+                  <span className="text-muted-foreground">Revenue:</span>
+                  <span className="font-bold text-foreground">₹{r.revenue.toLocaleString("en-IN")}</span>
+                </div>
+              </div>
+            );
+          })}
+          {/* Total Row */}
+          <div className="p-4 bg-muted/40 space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span className="font-black text-foreground text-sm">TOTAL</span>
+              <TrendBadge value={`${overallConversion}%`} direction={overallConversion >= 50 ? "up" : "neutral"} size="sm" />
+            </div>
+            <div className="grid grid-cols-3 gap-2 text-center text-xs">
+              <div className="bg-muted p-2 rounded-lg">
+                <span className="text-[10px] text-muted-foreground block font-bold">Registered</span>
+                <span className="font-black text-foreground">{totalRegistered.toLocaleString()}</span>
+              </div>
+              <div className="bg-success-muted p-2 rounded-lg">
+                <span className="text-[10px] text-success block font-bold">Paid</span>
+                <span className="font-black text-success">{totalPaid.toLocaleString()}</span>
+              </div>
+              <div className="bg-warning-muted p-2 rounded-lg">
+                <span className="text-[10px] text-warning block font-bold">Pending</span>
+                <span className="font-black text-warning">{totalPending.toLocaleString()}</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center text-sm pt-1">
+              <span className="font-bold text-muted-foreground">Total Revenue:</span>
+              <span className="font-black text-foreground">₹{totalRevenue.toLocaleString("en-IN")}</span>
+            </div>
+          </div>
+        </div>
       </Card>
 
       {/* Premium City Breakdown Table */}
@@ -258,7 +317,8 @@ export function ReportsTab({ reportData, revenueByCity, revenueByRace, participa
             Registration & Revenue Performance by City
           </CardTitle>
         </CardHeader>
-        <Table>
+        {/* Desktop View */}
+        <Table className="hidden md:table">
           <TableHeader>
             <TableRow className="hover:bg-transparent border-b-border/40">
               <TableHead className="font-bold text-xs uppercase tracking-wider">City</TableHead>
@@ -287,6 +347,39 @@ export function ReportsTab({ reportData, revenueByCity, revenueByRace, participa
             })}
           </TableBody>
         </Table>
+
+        {/* Mobile View */}
+        <div className="block md:hidden divide-y divide-border/20 dark:divide-white/5">
+          {cityPerformance.map((c) => {
+            const convRate = c.registered > 0 ? Math.round((c.paid / c.registered) * 100) : 0;
+            return (
+              <div key={c.name} className="p-4 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-secondary text-sm">{c.name}</span>
+                  <TrendBadge value={`${convRate}%`} direction={convRate >= 50 ? "up" : convRate >= 30 ? "neutral" : "down"} size="sm" />
+                </div>
+                <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                  <div className="bg-muted/30 dark:bg-white/5 p-2 rounded-lg">
+                    <span className="text-[10px] text-muted-foreground block">Registered</span>
+                    <span className="font-semibold text-foreground">{c.registered.toLocaleString()}</span>
+                  </div>
+                  <div className="bg-success-muted p-2 rounded-lg">
+                    <span className="text-[10px] text-success block">Paid</span>
+                    <span className="font-semibold text-success">{c.paid.toLocaleString()}</span>
+                  </div>
+                  <div className="bg-warning-muted p-2 rounded-lg">
+                    <span className="text-[10px] text-warning block">Pending</span>
+                    <span className="font-semibold text-warning">{c.pending.toLocaleString()}</span>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center text-xs pt-1">
+                  <span className="text-muted-foreground">Revenue:</span>
+                  <span className="font-bold text-foreground">₹{c.revenue.toLocaleString("en-IN")}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </Card>
     </div>
   );

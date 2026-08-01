@@ -1,10 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import EventHighlights from "@/components/marathon/EventHighlights";
 import RaceCategories from "@/components/marathon/RaceCategories";
+import EventHighlights from "@/components/marathon/EventHighlights";
 import EventTimeline from "@/components/marathon/EventTimeline";
-import ParticipantBenefits from "@/components/marathon/ParticipantBenefits";
 import BibPickupSection from "@/components/marathon/BibPickupSection";
-import FAQ from "@/components/marathon/FAQ";
 import { EVENT } from "@/data/marathon";
 
 export const Route = createFileRoute("/event-info")({
@@ -30,9 +28,7 @@ function EventInfo() {
       <RaceCategories />
       <EventHighlights />
       <EventTimeline />
-      <ParticipantBenefits />
       <BibPickupSection />
-      <FAQ />
     </div>
   );
 }

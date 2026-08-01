@@ -16,6 +16,7 @@ import { z } from "zod";
 import rateLimit from "express-rate-limit";
 import mongoSanitize from "express-mongo-sanitize";
 import { syncParticipantToSalesforce, deleteParticipantFromSalesforce } from "./salesforce.js";
+import { syncParticipantToZoho, deleteParticipantFromZoho } from "./zoho.js";
 
 dotenv.config();
 
@@ -1072,6 +1073,7 @@ const ParticipantSchema = new mongoose.Schema({
   paymentTxnId: { type: String, default: "" },
   bibNumber: { type: String, default: "" },
   salesforceLeadId: { type: String, default: "" },
+  zohoLeadId: { type: String, default: "" },
   registrationDate: { type: Date, default: Date.now },
   sentNotifications: {
     sevenDaysBefore: { type: Boolean, default: false },
@@ -1156,6 +1158,17 @@ app.post("/api/register", registerLimiter, async (req, res) => {
       }
     } catch (sfErr) {
       console.error("Salesforce initial sync error:", sfErr.message);
+    }
+
+    // Sync to Zoho CRM Lead
+    try {
+      const zohoLeadId = await syncParticipantToZoho(newParticipant);
+      if (zohoLeadId) {
+        newParticipant.zohoLeadId = zohoLeadId;
+        await newParticipant.save();
+      }
+    } catch (zhErr) {
+      console.error("Zoho CRM initial sync error:", zhErr.message);
     }
 
     // Send email, WhatsApp, and SMS notifications (non-blocking)
@@ -1265,6 +1278,17 @@ app.put("/api/admin/participants/:id/payment", authenticateAdmin, async (req, re
       console.error("Salesforce payment update sync error:", sfErr.message);
     }
 
+    // Sync to Zoho CRM
+    try {
+      const zohoLeadId = await syncParticipantToZoho(participant);
+      if (zohoLeadId && !participant.zohoLeadId) {
+        participant.zohoLeadId = zohoLeadId;
+        await participant.save();
+      }
+    } catch (zhErr) {
+      console.error("Zoho CRM payment update sync error:", zhErr.message);
+    }
+
     // Send payment confirmation notifications (email, SMS, and WhatsApp)
     if (paymentStatus === "Paid") {
       sendPaymentConfirmationEmail(participant);
@@ -1317,6 +1341,17 @@ app.put("/api/admin/participants/:id", authenticateAdmin, async (req, res) => {
       console.error("Salesforce edit sync error:", sfErr.message);
     }
 
+    // Sync updated details to Zoho CRM
+    try {
+      const zohoLeadId = await syncParticipantToZoho(participant);
+      if (zohoLeadId && !participant.zohoLeadId) {
+        participant.zohoLeadId = zohoLeadId;
+        await participant.save();
+      }
+    } catch (zhErr) {
+      console.error("Zoho CRM edit sync error:", zhErr.message);
+    }
+
     res.json({ success: true, participant });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -1334,6 +1369,14 @@ app.delete("/api/admin/participants/:id", authenticateAdmin, async (req, res) =>
         await deleteParticipantFromSalesforce(participant.salesforceLeadId);
       } catch (sfErr) {
         console.error("Salesforce delete sync error:", sfErr.message);
+      }
+    }
+
+    if (participant.zohoLeadId) {
+      try {
+        await deleteParticipantFromZoho(participant.zohoLeadId);
+      } catch (zhErr) {
+        console.error("Zoho CRM delete sync error:", zhErr.message);
       }
     }
 

@@ -78,7 +78,7 @@ export default function Navbar() {
         </ul>
         <div className="flex items-center gap-3">
           <Link
-            to="/register"
+            to="/register" target="_blank" rel="noopener noreferrer"
             className="hidden sm:inline-flex items-center rounded-full gradient-cta text-white px-6 py-2.5 text-sm font-semibold tracking-wide shadow-soft hover:shadow-glow hover:scale-105 transition-all duration-300"
           >
             Register Now
@@ -138,7 +138,7 @@ export default function Navbar() {
               style={{ transitionDelay: open ? `${NAV.length * 50}ms` : "0ms" }}
             >
               <Link
-                to="/register"
+                to="/register" target="_blank" rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
                 className="block text-center rounded-full gradient-cta text-white py-3 text-base font-semibold shadow-soft"
               >
@@ -151,3 +151,4 @@ export default function Navbar() {
     </header>
   );
 }
+

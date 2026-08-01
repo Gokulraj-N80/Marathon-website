@@ -1,8 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import AboutEvent from "@/components/marathon/AboutEvent";
 import WhyParticipate from "@/components/marathon/WhyParticipate";
-import MarathonDifference from "@/components/marathon/MarathonDifference";
-import HeartHealthSection from "@/components/marathon/HeartHealthSection";
 import RegistrationCTA from "@/components/marathon/RegistrationCTA";
 
 export const Route = createFileRoute("/about")({
@@ -29,8 +27,6 @@ function AboutPage() {
       </section>
       <AboutEvent />
       <WhyParticipate />
-      <MarathonDifference />
-      <HeartHealthSection />
       <RegistrationCTA />
     </div>
   );

@@ -60,7 +60,7 @@ export function TShirtTab({ tshirtData }: TShirtTabProps) {
       </div>
 
       {/* Premium Size Summary Cards */}
-      <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
         {tshirtData.map((t, i) => (
           <motion.div
             key={t.size}
@@ -94,7 +94,8 @@ export function TShirtTab({ tshirtData }: TShirtTabProps) {
 
       {/* Premium Size Table */}
       <Card className="bg-card border border-slate-200 dark:border-white/10 rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)]">
-        <div className="overflow-x-auto">
+        {/* Desktop View */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full border-collapse text-sm">
             <thead className="bg-muted text-xs uppercase font-bold text-muted-foreground tracking-wider">
               <tr>
@@ -137,6 +138,49 @@ export function TShirtTab({ tshirtData }: TShirtTabProps) {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile Card List View */}
+        <div className="block md:hidden divide-y divide-border/20 dark:divide-white/5">
+          {tshirtData.map((t, i) => (
+            <div key={t.size} className="p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-base font-black" style={{ color: COLORS.qualitative[i % COLORS.qualitative.length] }}>
+                  Size {t.size}
+                </span>
+                <span className="text-xs font-semibold text-muted-foreground">
+                  Share: {((t.total / totalAll) * 100).toFixed(1)}%
+                </span>
+              </div>
+              <div className="grid grid-cols-4 gap-2 text-center text-xs">
+                <div className="bg-muted/30 dark:bg-white/5 p-2 rounded-lg">
+                  <span className="text-[10px] text-muted-foreground block font-bold uppercase">5K</span>
+                  <span className="font-semibold text-foreground">{t.races["5k"]}</span>
+                </div>
+                <div className="bg-muted/30 dark:bg-white/5 p-2 rounded-lg">
+                  <span className="text-[10px] text-muted-foreground block font-bold uppercase">10K</span>
+                  <span className="font-semibold text-foreground">{t.races["10k"]}</span>
+                </div>
+                <div className="bg-muted/30 dark:bg-white/5 p-2 rounded-lg">
+                  <span className="text-[10px] text-muted-foreground block font-bold uppercase">21K</span>
+                  <span className="font-semibold text-foreground">{t.races["21k"]}</span>
+                </div>
+                <div className="bg-primary/10 p-2 rounded-lg">
+                  <span className="text-[10px] text-primary block font-bold uppercase">Total</span>
+                  <span className="font-black text-primary">{t.total}</span>
+                </div>
+              </div>
+              <div className="h-2 w-full bg-muted dark:bg-white/5 rounded-full overflow-hidden">
+                <div
+                  className="h-full rounded-full transition-all duration-500"
+                  style={{
+                    width: `${(t.total / totalAll) * 100}%`,
+                    backgroundColor: COLORS.qualitative[i % COLORS.qualitative.length],
+                  }}
+                />
+              </div>
+            </div>
+          ))}
         </div>
       </Card>
 

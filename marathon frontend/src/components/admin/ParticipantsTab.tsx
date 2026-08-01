@@ -110,7 +110,7 @@ export function ParticipantsTab({
   return (
     <div className="space-y-4 animate-fade-in-up">
       {/* Premium Filter Bar */}
-      <Card className="bg-card border border-slate-200 dark:border-white/10 rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)]">
+      <Card className="bg-card border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)]">
         <div className="p-4 sm:p-5 border-b border-border bg-muted dark:bg-[#111827]">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div className="flex flex-wrap gap-2 items-center">
@@ -119,7 +119,7 @@ export function ParticipantsTab({
               </span>
               <Select value={cityFilter || "__all__"} onValueChange={(v) => setCityFilter(v === "__all__" ? "" : v)}>
                 <SelectTrigger
-                  className="h-9 w-[130px] text-sm rounded-xl border border-border text-foreground shadow-sm"
+                  className="h-8 w-[100px] md:w-[130px] text-xs md:text-sm rounded-xl border border-border text-foreground shadow-sm"
                   style={{ background: "var(--color-card)" }}
                 >
                   <SelectValue placeholder="All Cities" />
@@ -136,7 +136,7 @@ export function ParticipantsTab({
               </Select>
               <Select value={raceFilter || "__all__"} onValueChange={(v) => setRaceFilter(v === "__all__" ? "" : v)}>
                 <SelectTrigger
-                  className="h-9 w-[120px] text-sm rounded-xl border border-border text-foreground shadow-sm"
+                  className="h-8 w-[90px] md:w-[120px] text-xs md:text-sm rounded-xl border border-border text-foreground shadow-sm"
                   style={{ background: "var(--color-card)" }}
                 >
                   <SelectValue placeholder="All Races" />
@@ -153,7 +153,7 @@ export function ParticipantsTab({
               </Select>
               <Select value={paymentFilter || "__all__"} onValueChange={(v) => setPaymentFilter(v === "__all__" ? "" : v)}>
                 <SelectTrigger
-                  className="h-9 w-[130px] text-sm rounded-xl border border-border text-foreground shadow-sm"
+                  className="h-8 w-[100px] md:w-[130px] text-xs md:text-sm rounded-xl border border-border text-foreground shadow-sm"
                   style={{ background: "var(--color-card)" }}
                 >
                   <SelectValue placeholder="All Payments" />
@@ -179,18 +179,18 @@ export function ParticipantsTab({
                   style={{ background: "var(--color-card)" }}
                 />
               </div>
-              <Button size="sm" variant="outline" className="h-9 rounded-xl text-sm font-semibold text-success border-success/30 hover:bg-success/10" onClick={exportCSV}>
-                <Download className="h-4 w-4 mr-1.5" /> CSV
+              <Button size="sm" variant="outline" className="h-8 md:h-9 rounded-xl text-xs md:text-sm font-semibold text-success border-success/30 hover:bg-success/10" onClick={exportCSV}>
+                <Download className="h-3.5 w-3.5 mr-1" /> CSV
               </Button>
-              <Button size="sm" className="h-9 rounded-xl text-sm font-semibold" onClick={exportExcel}>
-                <Download className="h-4 w-4 mr-1.5" /> Excel
+              <Button size="sm" className="h-8 md:h-9 rounded-xl text-xs md:text-sm font-semibold" onClick={exportExcel}>
+                <Download className="h-3.5 w-3.5 mr-1" /> Excel
               </Button>
             </div>
           </div>
         </div>
 
-        {/* Premium Table */}
-        <div className="overflow-x-auto">
+        {/* Premium Table - Desktop View */}
+        <div className="hidden md:block overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent border-b-white/10">
@@ -338,6 +338,110 @@ export function ParticipantsTab({
               )}
             </TableBody>
           </Table>
+        </div>
+
+        {/* Premium Card List - Mobile View */}
+        <div className="block md:hidden divide-y divide-border/30 dark:divide-white/5">
+          {paginatedParticipants.map((p, idx) => (
+            <div key={p._id} className="p-4 space-y-3.5 hover:bg-muted/10 transition-colors">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3 min-w-0">
+                  <PremiumAvatar name={p.fullName} size="md" colorIndex={p._id.charCodeAt(0)} />
+                  <div className="min-w-0">
+                    <h4 className="font-bold text-foreground text-sm leading-snug truncate">{p.fullName}</h4>
+                    <p className="text-[11px] text-muted-foreground mt-0.5">
+                      {new Date(p.registrationDate).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
+                    </p>
+                  </div>
+                </div>
+                <Badge
+                  variant="outline"
+                  className={cn(
+                    "font-bold text-[10px] px-2 py-0.5 rounded-lg border shrink-0",
+                    p.raceId === "21k" && "bg-purple-500/20 text-purple-400 border-purple-500/30",
+                    p.raceId === "10k" && "bg-orange-500/20 text-orange-400 border-orange-500/30",
+                    p.raceId === "5k" && "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+                  )}
+                >
+                  {p.raceId.toUpperCase()}
+                </Badge>
+              </div>
+
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 text-xs bg-muted/30 dark:bg-white/5 rounded-xl p-3">
+                <div>
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground/70">City</span>
+                  <p className="font-semibold text-foreground capitalize mt-0.5">{p.cityId}</p>
+                </div>
+                <div>
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground/70">T-Shirt</span>
+                  <p className="font-semibold text-foreground mt-0.5">{p.size}</p>
+                </div>
+                <div>
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground/70">BIB</span>
+                  <p className="font-mono font-bold text-foreground mt-0.5">{p.bibNumber || "—"}</p>
+                </div>
+                <div>
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground/70">Payment</span>
+                  <div className="mt-0.5">
+                    <Badge
+                      variant="outline"
+                      className={cn(
+                        "text-[10px] font-semibold px-2 py-0.5 rounded-full border",
+                        p.paymentStatus === "Paid"
+                          ? "bg-success/20 text-success-light border-success/30"
+                          : "bg-warning/20 text-warning-light border-warning/30"
+                      )}
+                    >
+                      {p.paymentStatus}
+                    </Badge>
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-xs space-y-1 px-1">
+                <p className="text-foreground/80 truncate"><span className="text-muted-foreground font-medium">Email: </span>{p.email}</p>
+                <p className="text-foreground/80"><span className="text-muted-foreground font-medium">Phone: </span>{p.phone}</p>
+              </div>
+
+              <div className="flex items-center justify-between pt-2 border-t border-border/20 dark:border-white/5">
+                <span className="text-[10px] uppercase font-bold text-muted-foreground/50">Actions</span>
+                <div className="flex items-center gap-1.5">
+                  <Button variant="outline" size="sm" className="h-8 px-2.5 rounded-lg text-xs font-semibold text-primary" onClick={() => onEdit(p)}>
+                    <Edit3 className="h-3.5 w-3.5 mr-1" /> Edit
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className={cn(
+                      "h-8 px-2.5 rounded-lg text-xs font-semibold",
+                      p.paymentStatus === "Paid"
+                        ? "text-muted-foreground hover:bg-muted/10 border-border"
+                        : "text-success border-success/30 hover:bg-success/10"
+                    )}
+                    onClick={() => onTogglePayment(p._id, p.paymentStatus)}
+                  >
+                    {p.paymentStatus === "Paid" ? <X className="h-3.5 w-3.5 mr-1 text-destructive" /> : <Check className="h-3.5 w-3.5 mr-1" />}
+                    {p.paymentStatus === "Paid" ? "Unpay" : "Pay"}
+                  </Button>
+                  {p.paymentStatus === "Paid" && (
+                    <Button variant="outline" size="sm" className="h-8 w-8 p-0 rounded-lg text-accent border-accent/20 hover:bg-accent/10" onClick={() => onSendCertificate(p._id)} title="Send Certificate">
+                      <Send className="h-3.5 w-3.5" />
+                    </Button>
+                  )}
+                  <Button variant="outline" size="sm" className="h-8 w-8 p-0 rounded-lg text-destructive border-destructive/20 hover:bg-destructive/10" onClick={() => onDelete(p._id)} title="Delete">
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ))}
+          {paginatedParticipants.length === 0 && (
+            <div className="text-center py-12">
+              <Search className="h-8 w-8 text-muted-foreground/30 mx-auto mb-2" />
+              <p className="text-sm font-semibold text-foreground">No participants found</p>
+              <p className="text-xs text-muted-foreground mt-1">Try adjusting your filters</p>
+            </div>
+          )}
         </div>
 
         {/* Premium Pagination */}

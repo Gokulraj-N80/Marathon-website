@@ -221,16 +221,16 @@ export function AdminLayout({ tab, setTab, onLogout, participantCount, children 
           </div>
         </header>
 
-        <main className="mx-auto max-w-[1600px] px-4 py-6 sm:px-6 lg:px-8">
-          <div className="mb-8 flex justify-center items-center text-center">
+        <main className="mx-auto max-w-[1600px] px-3 py-4 sm:px-6 lg:px-8">
+          <div className="mb-4 md:mb-8 flex justify-center items-center text-center">
             <div className="animate-fade-in-up flex flex-col items-center justify-center text-center">
-              <div className="mb-2.5 flex items-center justify-center gap-1.5 text-xs font-medium text-muted-foreground">
+              <div className="mb-1.5 flex items-center justify-center gap-1 text-xs font-medium text-muted-foreground">
                 Admin <ChevronRight className="h-3 w-3" /> <span className="text-primary font-semibold">{currentTabLabel}</span>
               </div>
-              <h1 className="font-display text-3xl font-black tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+              <h1 className="font-display text-xl sm:text-3xl lg:text-5xl font-black tracking-tight text-foreground">
                 {tab === "dashboard" ? "Dashboard Overview" : currentTabLabel}
               </h1>
-              <p className="mt-2 text-sm text-muted-foreground max-w-2xl">
+              <p className="mt-1 text-xs md:text-sm text-muted-foreground max-w-2xl hidden sm:block">
                 {tab === "dashboard"
                   ? "Real-time insights into your marathon registrations and revenue"
                   : "Manage your event data with precision and elegance"}

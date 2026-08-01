@@ -58,7 +58,7 @@ export default function HeroSection() {
 
             <div className="flex flex-wrap gap-4 pt-2">
               <Link
-                to="/register"
+                to="/register" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full gradient-orange text-white px-8 py-4 font-bold shadow-elevated hover:shadow-glow hover:scale-105 transition-all duration-300 text-base"
               >
                 Register Now <ArrowRight className="h-5 w-5" />
@@ -102,3 +102,4 @@ export default function HeroSection() {
     </section>
   );
 }
+

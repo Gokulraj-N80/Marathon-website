@@ -64,7 +64,7 @@ export default function Navbar() {
         </ul>
         <div className="flex items-center gap-2">
           <Link
-            to="/register"
+            to="/register" target="_blank" rel="noopener noreferrer"
             className="hidden sm:inline-flex items-center gap-2 rounded-full gradient-cta text-white px-5 py-2.5 text-sm font-semibold shadow-soft hover:shadow-glow hover:scale-105 transition"
           >
             Register Now
@@ -94,7 +94,7 @@ export default function Navbar() {
             ))}
             <li>
               <Link
-                to="/register"
+                to="/register" target="_blank" rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
                 className="block text-center rounded-full gradient-cta text-white px-5 py-3 text-sm font-semibold mt-2"
               >
@@ -107,3 +107,4 @@ export default function Navbar() {
     </header>
   );
 }
+

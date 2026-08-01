@@ -32,7 +32,7 @@ export function StatCard({ title, value, icon: Icon, color, subtitle, trend, del
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.1 + delay * 0.1, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
-        "relative group bg-card border border-slate-200 dark:border-white/10 rounded-3xl p-6 overflow-hidden",
+        "relative group bg-card border border-slate-200 dark:border-white/10 rounded-2xl p-4 md:p-6 overflow-hidden",
         "shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover-premium"
       )}
     >
@@ -51,7 +51,7 @@ export function StatCard({ title, value, icon: Icon, color, subtitle, trend, del
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 + delay * 0.1 }}
-            className="text-4xl font-black text-foreground tracking-tight leading-none counter-value"
+            className="text-2xl md:text-4xl font-black text-foreground tracking-tight leading-none counter-value"
           >
             {value}
           </motion.p>
@@ -94,8 +94,8 @@ export function StatCard({ title, value, icon: Icon, color, subtitle, trend, del
           )}
         </div>
 
-        <div className={cn("flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl", iconBg)}>
-          <Icon className="h-7 w-7 text-white" />
+        <div className={cn("flex h-10 w-10 md:h-14 md:w-14 shrink-0 items-center justify-center rounded-xl md:rounded-2xl", iconBg)}>
+          <Icon className="h-5 w-5 md:h-7 md:w-7 text-white" />
         </div>
       </div>
 

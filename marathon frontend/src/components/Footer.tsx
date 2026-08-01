@@ -6,7 +6,7 @@ import { EVENT } from "@/data/marathon";
 export default function Footer() {
   return (
     <footer className="gradient-footer text-white/80">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14 grid gap-10 md:grid-cols-4">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-14 grid grid-cols-2 gap-6 md:gap-10 md:grid-cols-4">
         <div className="md:col-span-1 space-y-4">
           <div className="[&_span]:!text-white"><Logo inFooter /></div>
           <p className="text-sm text-white/60 max-w-xs leading-relaxed">
@@ -27,7 +27,7 @@ export default function Footer() {
             <li><Link to="/event-info" className="hover:text-orange transition-colors duration-200">Event Info</Link></li>
             <li><Link to="/about" className="hover:text-orange transition-colors duration-200">About</Link></li>
             <li><Link to="/gallery" className="hover:text-orange transition-colors duration-200">Gallery</Link></li>
-            <li><Link to="/register" className="hover:text-orange transition-colors duration-200">Register</Link></li>
+            <li><Link to="/register" target="_blank" rel="noopener noreferrer" className="hover:text-orange transition-colors duration-200">Register</Link></li>
           </ul>
         </div>
         <div>
@@ -66,3 +66,4 @@ export default function Footer() {
     </footer>
   );
 }
+
