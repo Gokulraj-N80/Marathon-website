@@ -112,6 +112,48 @@ const themes: Record<string, { name: string; description: string; colors: CSSPro
       "--gradient-orange": "linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%)",
     },
   },
+  emeraldForestLight: {
+    name: "Emerald Forest Light (White BG)",
+    description: "Eco-friendly energy palette with deep forest green text, bright emerald primary branding, and neon lime highlights.",
+    isDark: false,
+    colors: {
+      "--navy": "#064E3B",       /* Deep Forest Green Text */
+      "--royal": "#10B981",      /* Emerald Green Primary */
+      "--orange": "#84CC16",     /* Neon Lime Accent */
+      "--emerald": "#10B981",    /* Green Badge */
+      "--gradient-hero": "linear-gradient(135deg, #064E3B 0%, #047857 50%, #84CC16 100%)",
+      "--gradient-cta": "linear-gradient(135deg, #10B981 0%, #059669 100%)",
+      "--gradient-orange": "linear-gradient(135deg, #84CC16 0%, #65A30D 100%)",
+    },
+  },
+  sunsetBoulevardLight: {
+    name: "Sunset Boulevard Light (White BG)",
+    description: "Warm athletic tones featuring deep plum text, vibrant sunset orange primary, and golden sun accents.",
+    isDark: false,
+    colors: {
+      "--navy": "#4C1D95",       /* Deep Plum Text */
+      "--royal": "#F97316",      /* Sunset Orange Primary */
+      "--orange": "#F59E0B",     /* Golden Sun Accent */
+      "--emerald": "#10B981",    /* Green Badge */
+      "--gradient-hero": "linear-gradient(135deg, #2E1065 0%, #F97316 50%, #F59E0B 100%)",
+      "--gradient-cta": "linear-gradient(135deg, #F97316 0%, #EA580C 100%)",
+      "--gradient-orange": "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)",
+    },
+  },
+  pureMonochromeLight: {
+    name: "Pure Monochrome Light (White BG)",
+    description: "Ultra-minimalist layout using only solid black text, graphite dark gray accents, and cool slate highlights.",
+    isDark: false,
+    colors: {
+      "--navy": "#000000",       /* Pure Black Text */
+      "--royal": "#27272A",      /* Graphite Accent */
+      "--orange": "#71717A",     /* Cool Slate Accent */
+      "--emerald": "#3F3F46",    /* Dark Gray Badge */
+      "--gradient-hero": "linear-gradient(135deg, #09090B 0%, #27272A 60%, #71717A 100%)",
+      "--gradient-cta": "linear-gradient(135deg, #27272A 0%, #09090B 100%)",
+      "--gradient-orange": "linear-gradient(135deg, #71717A 0%, #52525B 100%)",
+    },
+  },
 };
 
 function ThemePreview() {
