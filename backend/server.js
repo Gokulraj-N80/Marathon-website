@@ -1120,6 +1120,11 @@ const authenticateAdmin = (req, res, next) => {
 
 // --- API ROUTES ---
 
+// Public: Health Check / Root Route
+app.get("/", (req, res) => {
+  res.send("Run Beyond Limits 2026 API is running smoothly. 🏃‍♂️💨");
+});
+
 const registerLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 5, // Limit each IP to 5 registrations per window
