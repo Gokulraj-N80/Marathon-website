@@ -13,10 +13,11 @@ type CSSPropertiesWithVars = React.CSSProperties & {
   [key: string]: string;
 };
 
-const themes: Record<string, { name: string; description: string; colors: CSSPropertiesWithVars }> = {
+const themes: Record<string, { name: string; description: string; colors: CSSPropertiesWithVars; isDark: boolean }> = {
   default: {
-    name: "Default Brand",
-    description: "The original Navy Blue, Royal Blue, and Orange scheme.",
+    name: "Default Dark Theme",
+    description: "The original dark theme with Navy Blue, Royal Blue, and Orange.",
+    isDark: true,
     colors: {
       "--navy": "#0F172A",
       "--royal": "#2563EB",
@@ -27,49 +28,53 @@ const themes: Record<string, { name: string; description: string; colors: CSSPro
       "--gradient-orange": "linear-gradient(135deg, #F97316 0%, #EA580C 100%)",
     },
   },
-  stealthVolt: {
-    name: "Stealth & Volt (2-Color High Tech)",
-    description: "High-performance matte charcoal with high-visibility electric volt yellow/green accents.",
+  royalOrangeLight: {
+    name: "Royal & Orange Light (White BG)",
+    description: "Clean white background with royal blue headings, vibrant orange buttons, and deep navy text. Highly readable and professional.",
+    isDark: false,
     colors: {
-      "--navy": "#121214",       /* Dark Charcoal */
-      "--royal": "#CCFF00",      /* Volt Green */
-      "--orange": "#CCFF00",     /* Volt Green */
-      "--emerald": "#CCFF00",    /* Volt Green */
-      "--gradient-hero": "linear-gradient(135deg, #121214 0%, #1E1E22 60%, #2E2E34 100%)",
-      "--gradient-cta": "linear-gradient(135deg, #CCFF00 0%, #B3E000 100%)",
-      "--gradient-orange": "linear-gradient(135deg, #CCFF00 0%, #B3E000 100%)",
+      "--navy": "#0F172A",       /* Main Text / Headings */
+      "--royal": "#2563EB",      /* Primary Accent (Royal Blue) */
+      "--orange": "#F97316",     /* Warm Accent (Orange) */
+      "--emerald": "#10B981",    /* Badge Accent */
+      "--gradient-hero": "linear-gradient(135deg, #1E3A8A 0%, #2563EB 50%, #3B82F6 100%)", /* Banner retains energy */
+      "--gradient-cta": "linear-gradient(135deg, #F97316 0%, #EA580C 100%)",
+      "--gradient-orange": "linear-gradient(135deg, #F97316 0%, #EA580C 100%)",
     },
   },
-  pureCrimson: {
-    name: "Pure Crimson & Obsidian (2-Color Bold)",
-    description: "Deep obsidian dark background paired only with high-energy crimson red and white.",
+  forestGoldLight: {
+    name: "Forest & Gold Light (White BG)",
+    description: "Clean white background with deep forest green branding, premium gold accents, and dark charcoal text. Gives a highly premium, organic vibe.",
+    isDark: false,
     colors: {
-      "--navy": "#0A0D14",       /* Obsidian Dark */
-      "--royal": "#E11D48",      /* Crimson Red */
-      "--orange": "#E11D48",     /* Crimson Red */
-      "--emerald": "#10B981",    /* Kept emerald for success badges */
-      "--gradient-hero": "linear-gradient(135deg, #0A0D14 0%, #1A0B10 50%, #3F0712 100%)",
+      "--navy": "#1F2937",       /* Dark Charcoal Text */
+      "--royal": "#15803D",      /* Forest Green Primary */
+      "--orange": "#D97706",     /* Gold Accent */
+      "--emerald": "#16A34A",    /* Green Badge */
+      "--gradient-hero": "linear-gradient(135deg, #14532D 0%, #15803D 50%, #16A34A 100%)",
+      "--gradient-cta": "linear-gradient(135deg, #D97706 0%, #B45309 100%)",
+      "--gradient-orange": "linear-gradient(135deg, #D97706 0%, #B45309 100%)",
+    },
+  },
+  londonCrimsonLight: {
+    name: "London Crimson Light (White BG)",
+    description: "Clean white background with passionate crimson red and coral accents, and charcoal midnight text. Modern and high-energy.",
+    isDark: false,
+    colors: {
+      "--navy": "#111827",       /* Midnight Text */
+      "--royal": "#E11D48",      /* London Crimson Primary */
+      "--orange": "#F43F5E",     /* Coral/Rose Accent */
+      "--emerald": "#0D9488",    /* Teal Badge */
+      "--gradient-hero": "linear-gradient(135deg, #881337 0%, #E11D48 50%, #F43F5E 100%)",
       "--gradient-cta": "linear-gradient(135deg, #E11D48 0%, #BE123C 100%)",
       "--gradient-orange": "linear-gradient(135deg, #E11D48 0%, #BE123C 100%)",
-    },
-  },
-  electricObsidian: {
-    name: "Electric Blue & Dark Slate (3-Color Modern)",
-    description: "Minimalist dark slate background with a single bright electric cyan highlight and clean white text.",
-    colors: {
-      "--navy": "#0F172A",       /* Dark Slate */
-      "--royal": "#0EA5E9",      /* Electric Cyan */
-      "--orange": "#0EA5E9",     /* Electric Cyan */
-      "--emerald": "#0EA5E9",    /* Electric Cyan */
-      "--gradient-hero": "linear-gradient(135deg, #0F172A 0%, #0C4A6E 50%, #0284C7 100%)",
-      "--gradient-cta": "linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%)",
-      "--gradient-orange": "linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%)",
     },
   },
 };
 
 function ThemePreview() {
   const [activeTheme, setActiveTheme] = useState<keyof typeof themes>("default");
+  const theme = themes[activeTheme];
 
   return (
     <div className="min-h-screen bg-slate-100 dark:bg-slate-900">
@@ -83,7 +88,7 @@ function ThemePreview() {
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            {Object.entries(themes).map(([key, theme]) => (
+            {Object.entries(themes).map(([key, item]) => (
               <button
                 key={key}
                 onClick={() => setActiveTheme(key as keyof typeof themes)}
@@ -93,25 +98,27 @@ function ThemePreview() {
                     : "bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 dark:border-slate-700"
                 }`}
               >
-                {theme.name}
+                {item.name}
               </button>
             ))}
           </div>
         </div>
         <div className="max-w-7xl mx-auto mt-2 text-center md:text-left">
           <span className="text-xs font-medium text-slate-600 dark:text-slate-300 italic">
-            Active Palette Description: {themes[activeTheme].description}
+            Active Palette Description: {theme.description}
           </span>
         </div>
       </div>
 
       {/* Embedded Dynamic Homepage Preview */}
-      <div style={themes[activeTheme].colors} className="transition-all duration-500">
-        <div className="gradient-page min-h-screen">
-          <HeroSection />
-          <Sponsors />
-          <RaceCategories />
-          <AboutEvent />
+      <div style={theme.colors} className="transition-all duration-500">
+        <div className={theme.isDark ? "dark" : "light"}>
+          <div className="gradient-page min-h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100">
+            <HeroSection />
+            <Sponsors />
+            <RaceCategories />
+            <AboutEvent />
+          </div>
         </div>
       </div>
     </div>
