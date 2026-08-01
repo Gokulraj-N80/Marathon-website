@@ -70,6 +70,48 @@ const themes: Record<string, { name: string; description: string; colors: CSSPro
       "--gradient-orange": "linear-gradient(135deg, #E11D48 0%, #BE123C 100%)",
     },
   },
+  electricTealLight: {
+    name: "Teal & Violet Light (White BG)",
+    description: "Clean white background with modern electric teal primary branding and violet/purple highlights. Gives a tech-forward look.",
+    isDark: false,
+    colors: {
+      "--navy": "#0F172A",       /* Dark Slate Text */
+      "--royal": "#0D9488",      /* Electric Teal Primary */
+      "--orange": "#8B5CF6",     /* Violet Accent */
+      "--emerald": "#10B981",    /* Green Badge */
+      "--gradient-hero": "linear-gradient(135deg, #0D9488 0%, #0F766E 50%, #8B5CF6 100%)",
+      "--gradient-cta": "linear-gradient(135deg, #0D9488 0%, #0F766E 100%)",
+      "--gradient-orange": "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)",
+    },
+  },
+  solarYellowLight: {
+    name: "Solar & Matte Black Light (White BG)",
+    description: "High-contrast matte black headings with bright solar yellow action elements and highlights. Bold, modern and striking.",
+    isDark: false,
+    colors: {
+      "--navy": "#111111",       /* Matte Black Text */
+      "--royal": "#1A1A1A",      /* Deep Slate/Black Primary */
+      "--orange": "#EAB308",     /* Solar Yellow Accent */
+      "--emerald": "#10B981",    /* Green Badge */
+      "--gradient-hero": "linear-gradient(135deg, #1A1A1A 0%, #2A2A2A 50%, #EAB308 100%)",
+      "--gradient-cta": "linear-gradient(135deg, #1A1A1A 0%, #000000 100%)",
+      "--gradient-orange": "linear-gradient(135deg, #EAB308 0%, #CA8A04 100%)",
+    },
+  },
+  oceanBreezeLight: {
+    name: "Ocean Indigo & Sky Light (White BG)",
+    description: "Classic athletic style featuring deep ocean indigo with cool sky blue accents on a pure white canvas.",
+    isDark: false,
+    colors: {
+      "--navy": "#0A192F",       /* Ocean Navy Text */
+      "--royal": "#4338CA",      /* Indigo Primary */
+      "--orange": "#0EA5E9",     /* Sky Blue Accent */
+      "--emerald": "#10B981",    /* Green Badge */
+      "--gradient-hero": "linear-gradient(135deg, #1E1B4B 0%, #4338CA 50%, #0EA5E9 100%)",
+      "--gradient-cta": "linear-gradient(135deg, #4338CA 0%, #312E81 100%)",
+      "--gradient-orange": "linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%)",
+    },
+  },
 };
 
 function ThemePreview() {
