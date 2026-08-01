@@ -154,6 +154,48 @@ const themes: Record<string, { name: string; description: string; colors: CSSPro
       "--gradient-orange": "linear-gradient(135deg, #71717A 0%, #52525B 100%)",
     },
   },
+  tealVioletDeep: {
+    name: "Deep Teal & Amethyst (Premium Grounded)",
+    description: "Grounded Teal & Purple. Uses a richer, slightly darker pine-teal and deep amethyst purple to avoid the 'neon AI' look.",
+    isDark: false,
+    colors: {
+      "--navy": "#0F172A",       /* Dark Slate Text */
+      "--royal": "#0F766E",      /* Deep Pine Teal Primary */
+      "--orange": "#6D28D9",     /* Rich Amethyst Purple Accent */
+      "--emerald": "#10B981",    /* Green Badge */
+      "--gradient-hero": "linear-gradient(135deg, #115E59 0%, #0F766E 50%, #6D28D9 100%)",
+      "--gradient-cta": "linear-gradient(135deg, #0F766E 0%, #115E59 100%)",
+      "--gradient-orange": "linear-gradient(135deg, #6D28D9 0%, #5B21B6 100%)",
+    },
+  },
+  tealVioletMulberry: {
+    name: "Seafoam & Mulberry (Fresh & Artistic)",
+    description: "Organic feel. Uses fresh seafoam teal paired with warm mulberry/magenta accents and ink black headings.",
+    isDark: false,
+    colors: {
+      "--navy": "#111827",       /* Ink Black Text */
+      "--royal": "#0D9488",      /* Seafoam Teal Primary */
+      "--orange": "#9D174D",     /* Warm Mulberry Accent */
+      "--emerald": "#10B981",    /* Green Badge */
+      "--gradient-hero": "linear-gradient(135deg, #0D9488 0%, #0F766E 55%, #9D174D 100%)",
+      "--gradient-cta": "linear-gradient(135deg, #0D9488 0%, #0D9488 100%)",
+      "--gradient-orange": "linear-gradient(135deg, #9D174D 0%, #881337 100%)",
+    },
+  },
+  tealVioletNordic: {
+    name: "Nordic Cyan & Plum (Minimal Athletic)",
+    description: "Scandinavian style. Deep indigo-gray text with cool Nordic slate-cyan branding and rich plum accents.",
+    isDark: false,
+    colors: {
+      "--navy": "#0F172A",       /* Deep Slate Text */
+      "--royal": "#0891B2",      /* Nordic Cyan Primary */
+      "--orange": "#701A75",     /* Rich Plum Accent */
+      "--emerald": "#10B981",    /* Green Badge */
+      "--gradient-hero": "linear-gradient(135deg, #0F172A 0%, #0891B2 50%, #701A75 100%)",
+      "--gradient-cta": "linear-gradient(135deg, #0891B2 0%, #0E7490 100%)",
+      "--gradient-orange": "linear-gradient(135deg, #701A75 0%, #581C87 100%)",
+    },
+  },
 };
 
 function ThemePreview() {
