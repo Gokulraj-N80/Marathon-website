@@ -4,6 +4,7 @@ import AboutEvent from "@/components/marathon/AboutEvent";
 import RaceCategories from "@/components/marathon/RaceCategories";
 import Sponsors from "@/components/marathon/Sponsors";
 import FAQ from "@/components/marathon/FAQ";
+import EventMap from "@/components/marathon/EventMap";
 import { PageTransition } from "@/components/PremiumAnimations";
 
 export const Route = createFileRoute("/")({
@@ -22,8 +23,11 @@ function Index() {
         <div className="section-divider" />
         <AboutEvent />
         <div className="section-divider" />
+        <EventMap />
+        <div className="section-divider" />
         <FAQ />
       </div>
     </PageTransition>
   );
 }
+
