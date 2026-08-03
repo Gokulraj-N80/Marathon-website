@@ -15,6 +15,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import LoadingScreen from "@/components/LoadingScreen";
+import ScrollProgressBar from "@/components/ScrollProgressBar";
 
 function NotFoundComponent() {
   return (
@@ -108,9 +109,11 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
   const isAdmin = router.state.location.pathname === "/admin";
+  const isHome = router.state.location.pathname === "/" || router.state.location.pathname.includes("theme-preview");
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex flex-col min-h-screen">
+        <ScrollProgressBar />
         <LoadingScreen />
         {!isAdmin && <Navbar />}
         <main className="flex-1">

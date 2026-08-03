@@ -38,22 +38,15 @@ export function Logo({ compact = false, inFooter = false }: { compact?: boolean;
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const isHome = typeof window !== "undefined" && (window.location.pathname === "/" || window.location.pathname.includes("theme-preview"));
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-        scrolled
-          ? "bg-white/80 backdrop-blur-lg shadow-soft border-b border-white/20"
-          : "bg-white border-b border-slate-100"
-      }`}
+      className={
+        isHome
+          ? "absolute top-0 left-0 right-0 z-50 w-full bg-transparent border-b border-transparent"
+          : "relative z-50 w-full bg-white border-b border-slate-200"
+      }
     >
       <nav aria-label="Main navigation" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 md:h-[68px] flex items-center justify-between">
         <Logo />
@@ -68,8 +61,16 @@ export default function Navbar() {
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }
                 }}
-                className="relative px-4 py-2 text-base font-semibold tracking-wide text-slate-500 hover:text-royal rounded-full hover:bg-royal/5 transition-all duration-200 after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-royal after:rounded-full after:transition-all after:duration-300 hover:after:w-6"
-                activeProps={{ className: "!text-royal !font-bold !bg-royal/5 after:!w-6" }}
+                className={`relative px-4 py-2 text-base font-semibold tracking-wide rounded-full transition-all duration-200 after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-royal after:rounded-full after:transition-all after:duration-300 hover:after:w-6 ${
+                  isHome
+                    ? "text-white/80 hover:text-orange hover:bg-white/10"
+                    : "text-slate-600 hover:text-royal hover:bg-slate-100"
+                }`}
+                activeProps={{
+                  className: isHome
+                    ? "!text-white !font-bold !bg-white/15 after:!w-6"
+                    : "!text-royal !font-bold !bg-royal/5 after:!w-6",
+                }}
               >
                 {n.label}
               </Link>
@@ -86,7 +87,11 @@ export default function Navbar() {
           <button
             aria-label="Toggle menu"
             className={`lg:hidden inline-flex items-center justify-center h-10 w-10 rounded-full transition-all duration-200 ${
-              open ? "bg-royal/10 text-royal" : "hover:bg-slate-100 text-slate-500"
+              open
+                ? "bg-royal/10 text-royal"
+                : isHome
+                  ? "hover:bg-white/10 text-white/80"
+                  : "hover:bg-slate-100 text-slate-500"
             }`}
             onClick={() => setOpen((v) => !v)}
           >

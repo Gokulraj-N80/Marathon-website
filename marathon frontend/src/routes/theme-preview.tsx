@@ -168,6 +168,20 @@ const themes: Record<string, { name: string; description: string; colors: CSSPro
       "--gradient-orange": "linear-gradient(135deg, #6D28D9 0%, #5B21B6 100%)",
     },
   },
+  tealVioletDeepV2: {
+    name: "Deep Teal & Amethyst V2 (Vibrant/Alternate)",
+    description: "Alternate version with a slightly more vibrant seafoam-teal primary and a brighter violet-amethyst purple accent.",
+    isDark: false,
+    colors: {
+      "--navy": "#0F172A",       /* Dark Slate Text */
+      "--royal": "#0D9488",      /* Seafoam Teal Primary */
+      "--orange": "#7C3AED",     /* Brighter Amethyst/Violet Accent */
+      "--emerald": "#10B981",    /* Green Badge */
+      "--gradient-hero": "linear-gradient(135deg, #0D9488 0%, #0F766E 50%, #7C3AED 100%)",
+      "--gradient-cta": "linear-gradient(135deg, #0D9488 0%, #0F766E 100%)",
+      "--gradient-orange": "linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)",
+    },
+  },
   tealVioletMulberry: {
     name: "Seafoam & Mulberry (Fresh & Artistic)",
     description: "Organic feel. Uses fresh seafoam teal paired with warm mulberry/magenta accents and ink black headings.",

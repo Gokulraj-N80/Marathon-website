@@ -580,7 +580,12 @@ function generateCertificatePDF(participant) {
         .text(participant.fullName.toUpperCase(), 0, 230, { align: "center" });
 
       // Race completion details
-      const raceDetailsText = `For successfully completing the ${participant.raceId.toUpperCase()} category in the Run Beyond Limits 2026 Marathon held at ${getVenue(participant.cityId)}.`;
+      let raceDetailsText = `For successfully completing the ${participant.raceId.toUpperCase()} category in the Run Beyond Limits 2026 Marathon held at ${getVenue(participant.cityId)}`;
+      if (participant.raceStatus === "Finished" && participant.finishTime) {
+        raceDetailsText += ` with an official finish time of ${participant.finishTime}.`;
+      } else {
+        raceDetailsText += `.`;
+      }
       doc.fillColor("#334155")
         .font("Helvetica")
         .fontSize(16)
@@ -1075,6 +1080,8 @@ const ParticipantSchema = new mongoose.Schema({
   salesforceLeadId: { type: String, default: "" },
   zohoLeadId: { type: String, default: "" },
   registrationDate: { type: Date, default: Date.now },
+  finishTime: { type: String, default: "" },
+  raceStatus: { type: String, enum: ["Pending", "Finished", "DNF", "DNS"], default: "Pending" },
   sentNotifications: {
     sevenDaysBefore: { type: Boolean, default: false },
     threeDaysBefore: { type: Boolean, default: false },
@@ -1329,7 +1336,7 @@ app.put("/api/admin/participants/:id", authenticateAdmin, async (req, res) => {
     const participant = await Participant.findById(req.params.id);
     if (!participant) return res.status(404).json({ error: "Participant not found" });
 
-    const allowed = ["fullName", "phone", "email", "city", "cityId", "raceId", "size", "dob", "gender", "address", "state", "pincode", "emergencyContact", "paymentTxnId", "bibNumber"];
+    const allowed = ["fullName", "phone", "email", "city", "cityId", "raceId", "size", "dob", "gender", "address", "state", "pincode", "emergencyContact", "paymentTxnId", "bibNumber", "finishTime", "raceStatus"];
     for (const key of allowed) {
       if (req.body[key] !== undefined) participant[key] = req.body[key];
     }

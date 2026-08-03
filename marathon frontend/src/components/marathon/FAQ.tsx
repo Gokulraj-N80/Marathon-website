@@ -1,23 +1,28 @@
 import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { FAQS } from "@/data/marathon";
+import SectionHeader from "./SectionHeader";
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="py-24 md:py-28 gradient-soft dots-pattern">
+    <section id="faq" className="py-24 md:py-28 bg-[#F8FAFC] border-b border-border">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-14">
-          <p className="text-navy dark:text-primary-light font-semibold text-sm tracking-widest uppercase">FAQ</p>
-          <h2 className="mt-2 font-display text-3xl md:text-5xl font-extrabold text-charcoal dark:text-white">Frequently Asked Questions</h2>
-          <div className="mt-4 h-1.5 w-20 mx-auto rounded-full bg-navy dark:bg-primary-light" />
-        </div>
+        <SectionHeader
+          eyebrow="FAQ"
+          heading="Frequently Asked Questions"
+        />
         <div className="space-y-4">
           {FAQS.map((f, i) => {
             const isOpen = open === i;
             return (
-              <div
+              <motion.div
                 key={f.q}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.07 }}
                 className={`rounded-2xl border transition-all duration-300 ${
                   isOpen
                     ? "bg-white border-royal/30 shadow-card-hover scale-[1.01]"
@@ -38,12 +43,23 @@ export default function FAQ() {
                     {isOpen ? <Minus className="h-4 w-4" strokeWidth={3} /> : <Plus className="h-4 w-4" strokeWidth={3} />}
                   </span>
                 </button>
-                {isOpen && (
-                  <div className="px-6 md:px-7 pb-6 md:pb-7 text-xs md:text-sm text-slate-500 leading-relaxed animate-fade-up">
-                    <p className="border-t border-slate-100 pt-4">{f.a}</p>
-                  </div>
-                )}
-              </div>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      key="answer"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-6 md:px-7 pb-6 md:pb-7 text-xs md:text-sm text-slate-500 leading-relaxed">
+                        <p className="border-t border-slate-100 pt-4">{f.a}</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             );
           })}
         </div>

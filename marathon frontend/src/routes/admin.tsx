@@ -8,6 +8,7 @@ import { ParticipantsTab } from "@/components/admin/ParticipantsTab";
 import { TShirtTab } from "@/components/admin/TShirtTab";
 import { ReportsTab } from "@/components/admin/ReportsTab";
 import { ContactsTab } from "@/components/admin/ContactsTab";
+import { ResultsTab } from "@/components/admin/ResultsTab";
 import { EditModal } from "@/components/admin/EditModal";
 import { DeleteModal } from "@/components/admin/DeleteModal";
 import type { Participant } from "@/components/admin/types";
@@ -104,6 +105,14 @@ function AdminPage() {
       )}
 
       {tab === "contacts" && <ContactsTab contacts={contacts} />}
+
+      {tab === "results" && (
+        <ResultsTab
+          participants={participants}
+          onUpdateParticipant={updateParticipant}
+          onSendCertificate={sendCertificateEmail}
+        />
+      )}
 
       <EditModal
         participant={editingParticipant}

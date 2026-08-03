@@ -17,6 +17,8 @@ export interface Participant {
   paymentTxnId?: string;
   bibNumber?: string;
   registrationDate: string;
+  finishTime?: string;
+  raceStatus?: "Pending" | "Finished" | "DNF" | "DNS";
 }
 
 export interface ContactMessage {
@@ -42,7 +44,7 @@ export interface ReportRow {
   revenue: number;
 }
 
-export type AdminTab = "dashboard" | "players" | "tshirt" | "reports" | "contacts";
+export type AdminTab = "dashboard" | "players" | "tshirt" | "reports" | "contacts" | "results";
 
 export const RACE_PRICES: Record<string, number> = { "5k": 499, "10k": 799, "21k": 999 };
 

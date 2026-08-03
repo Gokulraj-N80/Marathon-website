@@ -26,6 +26,7 @@ interface AdminLayoutProps {
 const tabConfig = [
   { key: "dashboard" as const, label: "Dashboard", icon: LayoutDashboard, description: "Overview & analytics" },
   { key: "players" as const, label: "Participants", icon: Users, description: "Manage registrations" },
+  { key: "results" as const, label: "Results & Certs", icon: Award, description: "Runner times & certificates" },
   { key: "tshirt" as const, label: "T-Shirt Sizes", icon: Shirt, description: "Size distribution" },
   { key: "reports" as const, label: "Reports", icon: FileText, description: "Revenue analytics" },
   { key: "contacts" as const, label: "Messages", icon: MessageSquare, description: "Contact inquiries" },
