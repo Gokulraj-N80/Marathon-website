@@ -112,13 +112,13 @@ Stores encrypted admin credentials (`username`, bcrypt `password`).
 
 ```mermaid
 flowchart TD
-    A["Admin Enters Username & Password"] --> B["Server fetches Admin from MongoDB"]
-    B --> C["bcryptjs.compare() verifies password hash"]
-    C -->|Match| D["jwt.sign() generates 24h JWT Token"]
+    A["Admin Enters Username and Password"] --> B["Server fetches Admin from MongoDB"]
+    B --> C["bcryptjs verifies password hash"]
+    C -->|Match| D["jwt.sign generates 24h JWT Token"]
     D --> E["JWT returned to Admin Client"]
-    E -->|Authorization: Bearer Token| F["authenticateAdmin middleware"]
-    F -->|jwt.verify() valid| G["Permit route access"]
-    F -->|Invalid / Expired| H["401 Unauthorized response"]
+    E -->|Bearer Token sent| F["authenticateAdmin middleware"]
+    F -->|Valid Token| G["Permit route access"]
+    F -->|Invalid or Expired| H["401 Unauthorized response"]
 ```
 
 1. **Rate Limiting:** Registration endpoint capped at 5 requests per 15 minutes per IP using `express-rate-limit` to prevent spam bots.
