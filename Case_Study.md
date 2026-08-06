@@ -15,7 +15,7 @@
 
 ## 2. Project Overview
 
-Run Beyond Limits 2026 is a multi-city marathon event registration platform spanning **Chennai**, **Bengaluru**, and **Salem**. The platform allows runners to register for race categories (5K, 10K, Half Marathon), track payment status, and download personalized PDF participation certificates. Event administrators manage participants through a protected dashboard with live stats, BIB number assignment, and CRM integrations.
+Run Beyond Limits 2026 is a multi-city marathon event registration platform spanning **Chennai**, **Bengaluru**, and **Salem**. The platform allows runners to register for race categories (5K, 10K, Half Marathon), track payment status, and download personalized PDF participation certificates. Event administrators manage participants through a protected dashboard with live stats and BIB number assignment.
 
 ---
 
@@ -29,13 +29,11 @@ flowchart TD
     B -->|Mongoose ODM| C["MongoDB Atlas (Database)"]
     B -->|Registration / Payment Events| D["Nodemailer — Gmail / Brevo SMTP"]
     B -->|SMS Alerts| E["Twilio SMS API"]
-    B -->|Registration / Payment Sync| F["Salesforce CRM Lead API"]
-    B -->|Registration / Payment Sync| G["Zoho CRM Lead API"]
-    B -->|PDF Generation| H["PDFKit + QRCode Engine"]
+    B -->|PDF Generation| F["PDFKit + QRCode Engine"]
 ```
 
 * **Frontend:** Built with React 19, TypeScript, and TanStack Start to deliver a Server-Side Rendered public registration page and an admin dashboard SPA. Styling uses Tailwind CSS v4.
-* **Backend:** A single Express API server that handles registration, authentication, BIB assignment, certificate generation, CRM syncing, and multi-channel notification dispatch.
+* **Backend:** A single Express API server that handles registration, authentication, BIB assignment, certificate generation, and multi-channel notification dispatch.
 * **Database:** MongoDB Atlas document store persisting participant records, contact messages, and admin credentials.
 
 ---
@@ -49,7 +47,7 @@ flowchart TD
 * **Built the PDF Certificate Engine** — generates personalized PDF certificates with embedded QR codes using PDFKit.
 * **Configured automated email notifications** — styled HTML emails via Nodemailer (Gmail / Brevo SMTP) on registration, payment confirmation, and event reminders.
 * **Set up SMS alerts** — integrated Twilio to send registration confirmation and payment approval messages.
-* **Integrated Salesforce & Zoho CRM** — automatically syncs new and updated participant records to both CRM lead pipelines.
+* **Integrated Zoho CRM** — automatically syncs new and updated participant records to Zoho lead pipelines.
 * **Implemented rate limiting & security** — express-rate-limit protects registration endpoint, express-mongo-sanitize prevents injection attacks.
 * **Built BIB number auto-assignment** — deterministic BIB number generator scoped by city and race category on payment approval.
 * **Built multi-city, multi-race support** — data model and UI handle Chennai, Bengaluru, and Salem simultaneously across 5K, 10K, and 21K categories.
@@ -79,7 +77,6 @@ Stores all runner registration data:
 | `paymentStatus` | Enum | `Pending` / `Paid` |
 | `paymentTxnId` | String | Payment transaction reference |
 | `bibNumber` | String | Auto-assigned BIB on payment |
-| `salesforceLeadId` | String | Salesforce CRM Lead ID |
 | `zohoLeadId` | String | Zoho CRM Lead ID |
 | `finishTime` | String | Recorded race finish time |
 | `raceStatus` | Enum | `Pending` / `Finished` / `DNF` / `DNS` |
@@ -166,9 +163,8 @@ Notification delivery is tracked as boolean flags per participant in `sentNotifi
 
 ## 10. CRM Integration
 
-* **Salesforce CRM:** New registrations create a Lead record. Payment approvals update Lead status. Deletions remove the Lead.
-* **Zoho CRM:** Mirrors the Salesforce flow in parallel — creates, updates, and deletes leads independently.
-* CRM sync errors are caught per-platform and logged without blocking the primary API response.
+* **Zoho CRM:** New registrations automatically create a Lead record in Zoho. Payment approvals update the Lead status. Participant deletions remove the Lead from Zoho.
+* CRM sync errors are caught and logged without blocking the primary API response.
 
 ---
 
@@ -193,7 +189,6 @@ Notification delivery is tracked as boolean flags per participant in `sentNotifi
 Marathon-full/
 ├── backend/
 │   ├── server.js              # Express API — all routes, schemas, notifications
-│   ├── salesforce.js          # Salesforce CRM sync helpers
 │   ├── zoho.js                # Zoho CRM sync helpers
 │   ├── seed.js                # Admin seeder script
 │   └── seed-test.js           # Test participant seeder (100 records)
@@ -246,8 +241,8 @@ Marathon-full/
 * **Solution:** Each channel (email, SMS, WhatsApp) is wrapped in its own `try/catch` block and dispatched non-blocking (no `await`).
 
 ### Challenge 4: CRM Sync Without Blocking User Flow
-* **Problem:** Salesforce and Zoho API calls can take 2–5 seconds — too slow to await in a registration endpoint.
-* **Solution:** CRM syncs are wrapped in secondary try/catch blocks per-CRM independently, never blocking the API response.
+* **Problem:** Zoho CRM API calls can take 2–5 seconds — too slow to await in a registration endpoint.
+* **Solution:** Zoho sync is wrapped in a secondary try/catch block and fired independently, never blocking the API response.
 
 ---
 
@@ -265,11 +260,11 @@ Marathon-full/
 * **SSR with TanStack Start:** File-based routing and server-side data loading for hydrating pages with real data before sending HTML to the browser.
 * **Zod Schema Validation:** TypeScript-first schema validation to enforce strict API contracts without manual field checks.
 * **PDF Generation with PDFKit:** Programmatic PDF creation including dynamic text, layout coordinates, and embedded QR codes streamed directly to the HTTP response.
-* **Multi-CRM Integration:** Parallel CRM API integration patterns with independent error isolation to maintain resilience across third-party services.
+* **Zoho CRM Integration:** CRM API integration with independent error isolation to maintain resilience across third-party services.
 * **Production Deployment:** Configured SSR frontend + REST backend as separate Render web services with environment-scoped secrets.
 
 ---
 
 ## 18. Conclusion
 
-Run Beyond Limits 2026 demonstrates how a modern full-stack web platform can digitize and automate an end-to-end event management lifecycle — from online registration and payment tracking to BIB assignment, PDF certificate delivery, CRM lead management, and multi-channel runner communications. The platform successfully handles multi-city, multi-category event logic while keeping the registration experience fast, secure, and mobile-friendly.
+Run Beyond Limits 2026 demonstrates how a modern full-stack web platform can digitize and automate an end-to-end event management lifecycle — from online registration and payment tracking to BIB assignment, PDF certificate delivery, and multi-channel runner communications. The platform successfully handles multi-city, multi-category event logic while keeping the registration experience fast, secure, and mobile-friendly.
