@@ -1410,7 +1410,7 @@ app.get("/api/admin/reports/tshirt", authenticateAdmin, async (req, res) => {
     }
     for (const p of participants) {
       const s = (p.size || "").toUpperCase();
-      const r = p.raceId || "10k";
+      const r = (p.raceId || "10k").toLowerCase();
       if (sizeMap[s]) {
         sizeMap[s].total++;
         if (sizeMap[s].races[r] !== undefined) sizeMap[s].races[r]++;

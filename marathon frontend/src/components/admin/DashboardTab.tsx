@@ -15,6 +15,7 @@ interface DashboardTabProps {
   dailyData: { date: string; count: number }[];
   cityData: { name: string; value: number }[];
   participants: Participant[];
+  revenueByRace: { name: string; revenue: number }[];
 }
 
 const tooltipStyle = {
@@ -29,7 +30,7 @@ const tooltipStyle = {
   color: "#F8FAFC",
 };
 
-export function DashboardTab({ stats, categoryData, dailyData, cityData, participants }: DashboardTabProps) {
+export function DashboardTab({ stats, categoryData, dailyData, cityData, participants, revenueByRace }: DashboardTabProps) {
   const conversionRate = stats.total > 0 ? Math.round((stats.paid / stats.total) * 100) : 0;
   const avgRevenuePerPaid = stats.paid > 0 ? Math.round(stats.revenue / stats.paid) : 0;
   const pendingValue = stats.pending * 799; // Average estimate
@@ -129,7 +130,16 @@ export function DashboardTab({ stats, categoryData, dailyData, cityData, partici
           value={`₹${stats.revenue.toLocaleString("en-IN")}`}
           icon={IndianRupee}
           color="accent"
-          subtitle={`Avg ₹${avgRevenuePerPaid.toLocaleString("en-IN")} per paid`}
+          subtitle={
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
+              {revenueByRace.map(r => (
+                <span key={r.name} className="flex items-center gap-1.5">
+                  <span className="font-bold text-sm text-foreground/80">{r.name}:</span>
+                  <span className="font-semibold text-sm text-foreground">₹{r.revenue.toLocaleString("en-IN")}</span>
+                </span>
+              ))}
+            </div>
+          }
           delay={3}
         />
       </div>
@@ -165,11 +175,11 @@ export function DashboardTab({ stats, categoryData, dailyData, cityData, partici
               {categoryChartData.map((cat, i) => (
                 <div key={cat.name} className="flex items-center gap-2">
                   <span
-                    className="h-2.5 w-2.5 rounded-full"
+                    className="h-3 w-3 md:h-4 md:w-4 rounded-full"
                     style={{ backgroundColor: cat.fill }}
                   />
-                  <span className="text-xs font-medium text-foreground">{cat.name}</span>
-                  <span className="text-xs font-bold text-foreground bg-muted/50 px-2 py-0.5 rounded-full min-w-[36px] text-center">
+                  <span className="text-sm md:text-base font-bold text-foreground">{cat.name}</span>
+                  <span className="text-sm md:text-base font-black text-foreground bg-muted/60 px-3 py-1 rounded-full min-w-[44px] text-center shadow-sm">
                     {cat.value}
                   </span>
                 </div>

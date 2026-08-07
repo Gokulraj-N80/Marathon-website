@@ -7,7 +7,7 @@ interface StatCardProps {
   value: string | number;
   icon: LucideIcon;
   color: "primary" | "secondary" | "success" | "warning" | "accent" | "info" | "destructive";
-  subtitle?: string;
+  subtitle?: React.ReactNode;
   trend?: { value: number; label: string; isPositive: boolean };
   delay?: number;
 }

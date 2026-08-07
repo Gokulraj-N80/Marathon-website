@@ -149,14 +149,15 @@ export function useAdmin() {
     const pending = total - paid;
     const revenue = participants
       .filter((p) => p.paymentStatus === "Paid")
-      .reduce((acc, p) => acc + (RACE_PRICES[p.raceId] || 0), 0);
+      .reduce((acc, p) => acc + (RACE_PRICES[(p.raceId || "").toLowerCase()] || 0), 0);
     return { total, paid, pending, revenue };
   }, [participants]);
 
   const categoryData = useMemo(() => {
     const cats = { "5k": 0, "10k": 0, "21k": 0 };
     participants.forEach((p) => {
-      if (cats[p.raceId as keyof typeof cats] !== undefined) cats[p.raceId as keyof typeof cats]++;
+      const rId = (p.raceId || "").toLowerCase();
+      if (cats[rId as keyof typeof cats] !== undefined) cats[rId as keyof typeof cats]++;
     });
     return Object.entries(cats).map(([name, count]) => ({ name: name.toUpperCase(), count }));
   }, [participants]);
@@ -189,12 +190,13 @@ export function useAdmin() {
       "21k": { registered: 0, paid: 0, pending: 0, revenue: 0 },
     };
     participants.forEach((p) => {
-      const r = races[p.raceId];
+      const rId = (p.raceId || "").toLowerCase();
+      const r = races[rId];
       if (r) {
         r.registered++;
         if (p.paymentStatus === "Paid") {
           r.paid++;
-          r.revenue += RACE_PRICES[p.raceId] || 0;
+          r.revenue += RACE_PRICES[rId] || 0;
         } else {
           r.pending++;
         }
@@ -209,7 +211,8 @@ export function useAdmin() {
       .filter((p) => p.paymentStatus === "Paid")
       .forEach((p) => {
         const c = p.cityId || "unknown";
-        map[c] = (map[c] || 0) + (RACE_PRICES[p.raceId] || 0);
+        const rId = (p.raceId || "").toLowerCase();
+        map[c] = (map[c] || 0) + (RACE_PRICES[rId] || 0);
       });
     return Object.entries(map).map(([name, revenue]) => ({
       name: name.charAt(0).toUpperCase() + name.slice(1),
@@ -222,7 +225,8 @@ export function useAdmin() {
     participants
       .filter((p) => p.paymentStatus === "Paid")
       .forEach((p) => {
-        map[p.raceId] = (map[p.raceId] || 0) + (RACE_PRICES[p.raceId] || 0);
+        const rId = (p.raceId || "").toLowerCase();
+        map[rId] = (map[rId] || 0) + (RACE_PRICES[rId] || 0);
       });
     return Object.entries(map).map(([name, revenue]) => ({ name: name.toUpperCase(), revenue }));
   }, [participants]);

@@ -32,7 +32,8 @@ export function ReportsTab({ reportData, revenueByCity, revenueByRace, participa
       cities[cityKey].registered++;
       if (p.paymentStatus === "Paid") {
         cities[cityKey].paid++;
-        const price = { "5k": 499, "10k": 799, "21k": 999 }[p.raceId] || 0;
+        const rId = (p.raceId || "").toLowerCase();
+        const price = { "5k": 499, "10k": 799, "21k": 999 }[rId] || 0;
         cities[cityKey].revenue += price;
       } else {
         cities[cityKey].pending++;

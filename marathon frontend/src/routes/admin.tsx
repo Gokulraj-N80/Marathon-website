@@ -71,6 +71,7 @@ function AdminPage() {
           dailyData={dailyData}
           cityData={cityData}
           participants={participants}
+          revenueByRace={revenueByRace}
         />
       )}
 
