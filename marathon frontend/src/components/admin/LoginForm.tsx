@@ -234,6 +234,50 @@ export function LoginForm({ onLogin }: LoginFormProps) {
               }}
             />
 
+            {/* Loading Overlay */}
+            <AnimatePresence>
+              {isLoading && (
+                <motion.div
+                  initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+                  animate={{ opacity: 1, backdropFilter: "blur(12px)" }}
+                  exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+                  className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white/60 dark:bg-slate-900/60 rounded-3xl"
+                >
+                  <motion.div
+                    animate={{ 
+                      scale: [1, 1.1, 1],
+                      opacity: [0.8, 1, 0.8]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                    className="relative flex items-center justify-center mb-6"
+                  >
+                    <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl animate-pulse" />
+                    <motion.div 
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                      className="w-20 h-20 rounded-full border-4 border-slate-200 dark:border-white/10 border-t-primary border-r-primary border-b-secondary shadow-lg shadow-primary/20"
+                    />
+                    <ShieldAlert className="absolute w-8 h-8 text-primary animate-pulse" />
+                  </motion.div>
+                  
+                  <motion.h3 
+                    animate={{ opacity: [0.5, 1, 0.5] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                    className="text-lg font-bold text-slate-800 dark:text-white tracking-wide"
+                  >
+                    Authenticating...
+                  </motion.h3>
+                  <p className="text-sm text-slate-500 dark:text-white/60 mt-2">
+                    Securing your connection
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <div className="p-8 sm:p-10">
               {/* Header */}
               <div className="text-center mb-8">
